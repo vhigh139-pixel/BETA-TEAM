@@ -3,394 +3,437 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team BETA | Robotics Development Planning</title>
+    <title>Team BETA | The Robot Plan</title>
     <style>
-        :root { 
-            --neon-cyan: #00f2ff; 
-            --neon-matrix: #39ff14; 
-            --deep-space: #05070a; 
-            --steel-panel: #11141d; 
-            --ghost-white: #e0e0e0;
-            --dim-text: #94a3b8;
+        /* ========================================
+           CSS STYLES - MAKES IT LOOK COOL
+           ========================================
+        */
+        :root {
+            --primary: #00e5ff;    /* Bright Blue */
+            --secondary: #ff0055;  /* Bright Red */
+            --highlight: #39ff14;  /* Neon Green */
+            --dark: #0b0c15;       /* Dark Background */
+            --panel: #151621;      /* Panel Color */
+            --text: #e0e6ed;       /* Text Color */
         }
 
-        body { 
-            background-color: var(--deep-space); 
-            color: var(--ghost-white); 
-            font-family: 'Segoe UI', Arial, sans-serif; 
-            margin: 0; 
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
             overflow-x: hidden;
+            text-align: center;
         }
 
-        /* Technical Grid Overlay */
+        /* Cool Grid Background Effect */
         body::before {
-            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(90deg, rgba(0, 242, 255, 0.03) 1px, transparent 1px),
-                        linear-gradient(rgba(0, 242, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px; z-index: -1;
+            content: "";
+            position: fixed;
+            top: 0; 
+            left: 0;
+            width: 100%; 
+            height: 100%;
+            background: 
+                linear-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px), 
+                linear-gradient(90deg, rgba(0, 229, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
         }
 
-        .container { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            min-height: 100vh; 
-            padding: 50px 20px; 
-        }
-
-        .slide-wrapper {
-            background: var(--steel-panel); 
-            border: 1px solid rgba(0, 242, 255, 0.3);
-            border-radius: 4px;
-            width: 95%; 
-            max-width: 1100px; 
-            min-height: 800px; 
-            padding: 60px;
-            box-shadow: 0 20px 80px rgba(0,0,0,0.9);
-            display: none; 
-            position: relative;
-            box-sizing: border-box;
-            text-align: left;
-        }
-
-        .active { display: block; animation: slideReveal 0.6s ease-out; }
-
-        h1 { 
-            color: var(--neon-cyan); 
-            font-size: 2.5rem; 
-            text-transform: uppercase; 
-            letter-spacing: 5px; 
-            margin-bottom: 30px;
-            border-left: 5px solid var(--neon-cyan);
-            padding-left: 20px;
-        }
-
-        h2 { 
-            color: var(--neon-matrix); 
-            font-size: 1.3rem; 
-            letter-spacing: 2px; 
-            margin-bottom: 20px; 
-            text-transform: uppercase;
-        }
-
-        .paragraph { 
-            font-size: 1.15rem; 
-            line-height: 2; 
-            color: var(--dim-text); 
-            margin-bottom: 25px;
-            text-align: justify;
-        }
-
-        .highlight { color: var(--neon-cyan); font-weight: 600; }
-
-        .image-box {
-            width: 100%;
-            margin: 40px 0;
-            padding: 20px;
-            background: rgba(0,0,0,0.3);
-            border: 1px dashed #334155;
+        .main-container {
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px;
+        }
+
+        /* The Slide Box */
+        .slide-card {
+            background: var(--panel);
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 900px;
+            min-height: 700px;
+            padding: 50px;
+            box-shadow: 0 0 50px rgba(0, 229, 255, 0.15);
+            display: none; /* Hidden by default */
+            animation: floatUp 0.5s ease-out;
+            position: relative;
+        }
+
+        .active {
+            display: block; /* Show active slide */
+        }
+
+        /* Typography */
+        h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+        }
+
+        h2 {
+            color: var(--highlight);
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            text-align: left;
+            margin-bottom: 20px;
+            color: #bdc3c7;
+        }
+
+        .team-names {
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        /* ========================================
+           CUSTOM DIAGRAMS (BUILT IN CODE)
+           ========================================
+        */
+        .diagram-box {
+            background: #000;
+            border: 2px dashed #444;
+            border-radius: 10px;
+            margin: 30px auto;
+            padding: 20px;
+            width: 100%;
+            max-width: 500px;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Diagram 1: Robot Face */
+        .robot-face {
+            width: 100px; height: 80px; background: #333;
+            border: 2px solid var(--primary); border-radius: 10px;
+            position: relative;
+        }
+        .robot-eye {
+            width: 20px; height: 20px; background: var(--secondary);
+            border-radius: 50%; position: absolute; top: 20px;
+            box-shadow: 0 0 10px var(--secondary);
+        }
+        .eye-left { left: 20px; } .eye-right { right: 20px; }
+
+        /* Diagram 2: Sound Waves */
+        .wave {
+            width: 10px; height: 40px; border-right: 3px solid var(--highlight);
+            border-radius: 50%; position: absolute; opacity: 0;
+            animation: sonar 1.5s infinite linear;
+        }
+        .w1 { left: 140px; animation-delay: 0s; }
+        .w2 { left: 160px; animation-delay: 0.2s; height: 60px; top: 95px; }
+        .w3 { left: 180px; animation-delay: 0.4s; height: 80px; top: 85px; }
+
+        /* Diagram 3: Wiring */
+        .battery {
+            width: 60px; height: 100px; border: 3px solid var(--secondary);
+            position: absolute; left: 100px;
+        }
+        .wire-line {
+            height: 4px; background: var(--secondary); width: 150px;
+            position: absolute; top: 125px; left: 160px;
+        }
+        .arduino-board {
+            width: 100px; height: 120px; background: #004466;
+            position: absolute; right: 100px; border: 2px solid var(--primary);
+        }
+
+        /* Navigation Buttons */
+        .controls {
+            margin-top: 40px;
+            display: flex;
+            gap: 20px;
             justify-content: center;
         }
 
-        .diagram-img {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid var(--neon-cyan);
-            filter: grayscale(20%) contrast(110%);
-        }
-
-        .footer-nav { 
-            margin-top: 50px; 
-            display: flex; 
-            gap: 40px; 
-            padding-bottom: 50px;
-        }
-
-        .nav-btn {
-            background: transparent; 
-            color: var(--neon-cyan); 
-            border: 1px solid var(--neon-cyan);
-            padding: 15px 50px; 
-            font-size: 1rem; 
+        .btn {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
             font-weight: bold;
-            cursor: pointer; 
-            text-transform: uppercase; 
-            transition: 0.4s;
-            letter-spacing: 2px;
+            transition: 0.3s;
+            text-transform: uppercase;
         }
 
-        .nav-btn:hover { 
-            background: var(--neon-cyan); 
-            color: var(--deep-space); 
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.4); 
+        .btn:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 20px var(--primary);
         }
 
-        .counter { 
-            position: absolute; 
-            bottom: 30px; 
-            right: 40px; 
-            font-family: 'Courier New', monospace; 
-            color: var(--neon-cyan); 
+        /* Slide Counter */
+        .page-num {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #555;
+            font-family: monospace;
             font-size: 1.2rem;
         }
 
-        @keyframes slideReveal {
-            from { opacity: 0; transform: translateX(30px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
+        @keyframes floatUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes sonar { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.5); translateX(20px); } }
+        
+        /* List Styling */
+        ul { text-align: left; font-size: 1.3rem; line-height: 1.8; color: #bdc3c7; }
+        li { margin-bottom: 10px; }
+        b { color: var(--highlight); }
 
-        ul { margin-bottom: 30px; }
-        li { margin-bottom: 15px; color: var(--dim-text); font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div id="deck">
-        <div class="slide-wrapper active">
-            <h1>Project Initiation: Team BETA</h1>
-            <h2>Autonomous Follow-Me Robot Strategy</h2>
-            <p class="paragraph">
-                Team BETA, composed of <span class="highlight">Maier, Ayan, and Abdul Rehman</span>, is entering the primary planning phase for an Autonomous Follow-Me Robotic platform. This project is designed to bridge the gap between theoretical electronics and physical automation. Our initial research focuses on creating a reliable tracking system using ultrasonic wave propagation.
-            </p>
-            <p class="paragraph">
-                The objective of this phase is to define the hardware requirements and develop a logical roadmap for the system's architecture. By establishing clear engineering goals now, we ensure that our future build will be stable, responsive, and efficient. This presentation outlines our blueprint for the upcoming development cycle.
-            </p>
-            <div class="image-box">
-                
+<div class="main-container">
+
+    <div class="slide-card active">
+        <div class="page-num">1 / 15</div>
+        <h1>🤖 Team BETA</h1>
+        <h2>The "Follow-Me" Robot Project</h2>
+        
+        <p>Hello! We are <b>Team BETA</b>.</p>
+        <p>Our team members are <span class="team-names">Maier, Ayan, and Abdul Rehman</span>.</p>
+        <p>We are planning to build a robot that acts like a loyal pet. Imagine a robot that sees you and follows you wherever you go! We don't need a remote control because the robot will think for itself.</p>
+        
+        <div class="diagram-box">
+            <div class="robot-face">
+                <div class="robot-eye eye-left"></div>
+                <div class="robot-eye eye-right"></div>
             </div>
-            <div class="counter">PHASE: PLANNING_01/20</div>
-        </div>
-
-        <div class="slide-wrapper">
-            <h1>The Central Logic Unit</h1>
-            <h2>Selecting the Arduino Platform</h2>
-            <p class="paragraph">
-                For our central processor, the team has selected the <span class="highlight">Arduino</span> platform. Our planning dictates that we need a controller with sufficient I/O pins and a clock speed capable of processing sonar data without significant latency. The Arduino is ideal because it allows for rapid prototyping and has a robust library system for motor control.
-            </p>
-            <p class="paragraph">
-                During the planning phase, Maier, Ayan, and Abdul Rehman are mapping out the specific digital and analog pins required to interface with the sensors and drivers. This documentation is critical to ensure that our future software code aligns perfectly with the physical hardware connections.
-            </p>
-            <div class="image-box">
-                
-            </div>
-            <div class="counter">PHASE: PLANNING_02/20</div>
-        </div>
-
-        <div class="slide-wrapper">
-            <h1>Proposed Wiring Schematic</h1>
-            <h2>Design and Signal Path Planning</h2>
-            <p class="paragraph">
-                A critical part of our current planning is the <span class="highlight">Technical Wiring Map</span>. We are designing a layout that prioritizes signal integrity. This involves planning the paths for the 5V logic lines and the 9V power lines. Team BETA is focused on a "Star Ground" configuration to minimize electrical noise that could interfere with our distance readings.
-            </p>
-            <p class="paragraph">
-                The schematic we are developing will serve as the master guide during the assembly phase. By documenting every jumper wire and resistor value now, Maier, Ayan, and Abdul Rehman are taking a professional "Design First" approach to robotics, significantly reducing the risk of short circuits or logic errors later.
-            </p>
-            <div class="image-box">
-                
-            </div>
-            <div class="counter">PHASE: PLANNING_03/20</div>
-        </div>
-
-        <div class="slide-wrapper">
-            <h1>Spatial Perception Planning</h1>
-            <h2>HC-SR04 Sensor Integration</h2>
-            <p class="paragraph">
-                To give the robot "vision," we have planned the integration of the <span class="highlight">HC-SR04 Ultrasonic Sensor</span>. Our research indicates this is the most effective low-cost solution for indoor proximity detection. Our planning includes determining the optimal mounting height on the chassis to ensure a clear line of sight for the 40kHz acoustic pulses.
-            </p>
-            <p class="paragraph">
-                The sensor will be the primary source of input data for our autonomous logic. During this planning stage, we are calculating the necessary delay times between "pings" to avoid "ghost echoes"—a phenomenon where old sound waves interfere with new distance readings.
-            </p>
-            <div class="image-box">
-                
-            </div>
-            <div class="counter">PHASE: PLANNING_04/20</div>
-        </div>
-
-        <div class="slide-wrapper">
-            <h1>Theoretical Calculations</h1>
-            <h2>Sonar Distance Modeling</h2>
-            <p class="paragraph">
-                Our planning involves establishing the mathematical foundations of the robot. We are using the speed of sound—343 meters per second—as our constant. Team BETA is planning the implementation of the formula: <span class="highlight">Distance = (Time × 0.034) / 2</span>.
-            </p>
-            <p class="paragraph">
-                By modeling these calculations before writing the code, Maier, Ayan, and Abdul Rehman can predict the robot's accuracy. We are also planning to implement a "Running Average" algorithm to smooth out sensor data, which will prevent the robot from reacting to small fluctuations in the ultrasonic readings.
-            </p>
-            <div class="image-box">
-                
-            </div>
-            <div class="counter">PHASE: PLANNING_05/20</div>
-        </div>
-
-        <div class="slide-wrapper">
-            <h1>Algorithm Architecture</h1>
-            <h2>Autonomous Decision Tree</h2>
-            <p class="paragraph">
-                The team is currently designing the <span class="highlight">Decision Logic Flowchart</span>. This will be the "Mind" of the robot. We are planning a state-machine architecture that constantly evaluates the following conditions:
-            </p>
-            <ul>
-                <li><strong>Proximity Brake:</strong> If the target is within a 15cm safety threshold, stop all motor activity.</li>
-                <li><strong>Tracking Mode:</strong> If the target is between 20cm and 50cm, maintain forward velocity.</li>
-                <li><strong>Search State:</strong> If the target is lost (Distance > 100cm), enter an idle scanning mode.</li>
-            </ul>
-            <p class="paragraph">This logical planning ensures that the robot behaves predictably and safely in all scenarios.</p>
-            <div class="counter">PHASE: PLANNING_06/20</div>
-        </div>
-
-        <div class="slide-wrapper">
-            <h1>Motor Driver Specifications</h1>
-            <h2>L298N H-Bridge Strategy</h2>
-            <p class="paragraph">
-                The <span class="highlight">L298N Motor Driver</span> is our planned interface for mechanical movement. Because the Arduino cannot drive motors directly, this module is a requirement. Our planning involves configuring the H-Bridge pins to allow for bi-directional control, which is essential for steering.
-            </p>
-            <p class="paragraph">
-                Maier, Ayan, and Abdul Rehman are studying the thermal properties of the L298N to ensure it does not overheat during extended use. We are also planning the jumper settings for the "Enable" pins to allow for Pulse Width Modulation (PWM) speed control.
-            </p>
-            <div class="image-box">
-                
-            </div>
-            <div class="counter">PHASE: PLANNING_07/20</div>
-        </div>
-
-        <div class="slide-wrapper">
-            <h1>Mechanical Drivetrain</h1>
-            <h2>DC Motor and Torque Requirements</h2>
-            <p class="paragraph">
-                We are planning to use two geared DC motors for the robot’s propulsion. Our focus is on <span class="highlight">Torque</span> over speed. Geared motors provide the necessary force to move the chassis while allowing for precise, low-speed maneuvers.
-            </p>
-            <p class="paragraph">
-                The team is also evaluating wheel diameters to determine the "RPM to Velocity" ratio. This planning is vital because it determines how fast the robot can catch up to a user who is walking at a normal pace.
-            </p>
-            <div class="image-box">
-                
-            </div>
-            <div class="counter">PHASE: PLANNING_08/20</div>
-        </div>
-
-        <div class="slide-wrapper">
-            <h1>Interface Pinout Planning</h1>
-            <h2>Arduino Configuration Map</h2>
-            <p class="paragraph">
-                An essential step in our planning is the <span class="highlight">Pinout Table</span>. We are assigning specific digital pins for the Trigger and Echo functions of the HC-SR04, and PWM-capable pins for the motor driver speed control. 
-            </p>
-            <p class="paragraph">
-                This planning avoids "Pin Conflicts"—a common mistake where two components try to use the same internal timer of the Arduino. Maier, Ayan, and Abdul Rehman have documented these pins to ensure the future coding phase proceeds without hardware-related bugs.
-            </p>
-            <div class="image-box">
-                
-
-[Image of an Arduino board with pins labeled]
-
-            </div>
-            <div class="counter">PHASE: PLANNING_09/20</div>
-        </div>
-
-        <div class="slide-wrapper">
-            <h1>Energy Source Strategy</h1>
-            <h2>Battery and Voltage Regulation</h2>
-            <p class="paragraph">
-                Team BETA is planning a 9V power delivery system. Our primary concern during this planning stage is <span class="highlight">Voltage Stability</span>. We are designing a power rail that separates the "noisy" motor current from the "clean" logic current.
-            </p>
-            <p class="paragraph">
-                We are also planning to include an external switch for safety and a voltage monitoring system. This allows the team to ensure the batteries have enough charge to power both the motors and the processing logic simultaneously.
-            </p>
-            <div class="image-box">
-                
-            </div>
-            <div class="counter">PHASE: PLANNING_10/20</div>
-        </div>
-
-        <div class="slide-wrapper">
-            <h1>Prototype Simulation</h1>
-            <h2>Virtual Testing Phase</h2>
-            <p class="paragraph">Part of our current planning is to simulate the circuit using CAD software before any wires are cut. This allows <span class="highlight">Maier, Ayan, and Abdul Rehman</span> to visualize the flow of electricity. We are using these simulations to identify potential bottlenecks in the data flow. By virtually testing the sonar's field of view, we can determine exactly where to place it on the chassis for maximum tracking efficiency.</p>
-            <div class="image-box">
-                
-            </div>
-            <div class="counter">PHASE: PLANNING_11/20</div>
-        </div>
-
-        <div class="slide-wrapper">
-            <h1>Environmental Signal Analysis</h1>
-            <h2>Accounting for Interference</h2>
-            <p class="paragraph">Our planning includes an analysis of environmental interference. Ultrasonic waves can be absorbed by carpets or reflected poorly by glass. Team BETA is planning to write a "Calibration Routine" into the software. This will allow the robot to adjust its sensitivity based on the room it is in. This advanced planning ensures the robot will work in a classroom, a lab, or a hallway with equal reliability.</p>
-            <div class="counter">PHASE: PLANNING_12/20</div>
-        </div>
-
-        <div class="slide-wrapper">
-            <h1>Chassis Structural Design</h1>
-            <h2>Material Selection and Balance</h2>
-            <p class="paragraph">The team is evaluating acrylic vs. 3D-printed materials for the chassis frame. Our planning focuses on <span class="highlight">Structural Integrity</span>. We need a base that is rigid enough to hold the motors in place but light enough to not drain the batteries. We are planning to place the battery pack at the very center of the chassis to ensure a balanced center of gravity, preventing the robot from tipping during fast stops.</p>
-            <div class="counter">PHASE: PLANNING_13/20</div>
-        </div>
-
-        <div class="slide-wrapper">
-            <h1>Software Development Roadmap</h1>
-            <h2>Iterative Coding Strategy</h2>
-            <p class="paragraph">The coding phase is planned to be iterative. We will start with a simple "Stop/Go" script and then move to "Proportional Speed Control." Proportional control means the robot will slow down smoothly as it gets closer to the user, rather than stopping abruptly. This planning is what will make the Team BETA robot look professional and sophisticated compared to basic hobby projects.</p>
-            <div class="counter">PHASE: PLANNING_14/20</div>
-        </div>
-
-        <div class="slide-wrapper">
-            <h1>PWM Tuning and Frequency</h1>
-            <h2>Motor Speed Optimization</h2>
-            <p class="paragraph">A key planning objective is to determine the ideal PWM frequency for our DC motors. If the frequency is too low, the motors will make a buzzing sound; if it's too high, they lose torque. Maier and the team are planning to test different duty cycles to find the "Sweet Spot" where the motors are quiet, strong, and responsive. This level of detail is a core part of our engineering planning.</p>
-            <div class="counter">PHASE: PLANNING_15/20</div>
-        </div>
-
-        <div class="slide-wrapper">
-            <h1>Risk Assessment & Mitigation</h1>
-            <h2>Ensuring System Reliability</h2>
-            <p class="paragraph">No engineering project is without risk. Team BETA is currently planning for "Worst Case Scenarios," such as a sensor failing or a motor stalling. We are planning to include "Failsafe Code" that will cut power to the motors if the Arduino stops receiving valid data from the sonar sensor. This proactive planning is essential for the safety of the hardware and the users.</p>
-            <div class="counter">PHASE: PLANNING_16/20</div>
-        </div>
-
-        <div class="slide-wrapper">
-            <h1>Scaling to Industry Standards</h1>
-            <h2>Real-World Application Study</h2>
-            <p class="paragraph">As part of our planning, we are studying how industrial giants like Amazon and Tesla handle autonomous tracking. While we are using an Arduino, the logic of "Distance Maintenance" we are planning is a simplified version of the algorithms used in self-driving cars. This project is a foundational step in our journey to becoming professional roboticists.</p>
-            <div class="counter">PHASE: PLANNING_17/20</div>
-        </div>
-
-        <div class="slide-wrapper">
-            <h1>Team Communication Protocols</h1>
-            <h2>Managing a Multi-Disciplinary Project</h2>
-            <p class="paragraph">Team BETA recognizes that communication is as important as the circuit. We are planning weekly "Design Reviews" where Maier, Ayan, and Abdul Rehman will check each other’s work. This collaborative planning ensures that the mechanical build fits the electrical wiring, and the electrical wiring supports the software requirements. Total team synergy is our goal.</p>
-            <div class="counter">PHASE: PLANNING_18/20</div>
-        </div>
-
-        <div class="slide-wrapper">
-            <h1>Projected Timeline</h1>
-            <h2>Milestones and Deadlines</h2>
-            <p class="paragraph">Our planning includes a strict timeline. Week 1 is for circuit simulation. Week 2 is for chassis assembly. Week 3 is for core logic programming. By breaking the project into these planned segments, <span class="highlight">Maier, Ayan, and Abdul Rehman</span> can ensure that the project is submitted on time without rushing the critical testing phases.</p>
-            <div class="counter">PHASE: PLANNING_19/20</div>
-        </div>
-
-        <div class="slide-wrapper">
-            <h1>Conclusion of Planning Phase</h1>
-            <h2>Readiness for Construction</h2>
-            <p class="paragraph">In conclusion, Team BETA has developed a comprehensive and professional plan for the Follow-Me Robot. We have defined our hardware, mapped our software logic, and analyzed the physics of our sensors. We are now ready to move from the planning phase into the physical construction phase with total confidence.</p>
-            <p class="paragraph"><strong>Strategy by: Maier, Ayan, and Abdul Rehman</strong></p>
-            <p class="paragraph">Our blueprints are ready. Are there any questions regarding our technical planning?</p>
-            <div class="counter">PHASE: PLANNING_20/20</div>
+            <div style="color: white; margin-left: 20px;">I see you!</div>
         </div>
     </div>
 
-    <div class="footer-nav">
-        <button class="nav-btn" onclick="nav(-1)">Back</button>
-        <button class="nav-btn" onclick="nav(1)">Next Slide</button>
+    <div class="slide-card">
+        <div class="page-num">2 / 15</div>
+        <h1>🧠 The Brain (Arduino)</h1>
+        <h2>How does it think?</h2>
+        
+        <p>Just like we have a brain, the robot needs a brain too. We are using a small computer called an <b>Arduino</b>.</p>
+        <p>The Arduino is the boss. It sits in the middle of the robot. It tells the wheels when to spin and when to stop. Without the Arduino, the robot would just be a pile of plastic and metal.</p>
+        
+        <div class="diagram-box">
+            <div class="arduino-board" style="position:relative; right:0; margin:auto;">
+                <div style="width:80%; height:10px; background:#333; margin:10px auto;"></div>
+                <div style="color:white; font-size:12px; text-align:center; padding-top:30px;">ARDUINO<br>CHIP</div>
+            </div>
+        </div>
     </div>
+
+    <div class="slide-card">
+        <div class="page-num">3 / 15</div>
+        <h1>👀 The Eyes (Sonar)</h1>
+        <h2>Seeing with Sound</h2>
+        
+        <p>Our robot doesn't use cameras. It uses <b>Sound Waves</b>! This is called "Ultrasonic."</p>
+        <p>It works just like a bat in a cave:</p>
+        <ul>
+            <li>1. The robot shouts a "beep" (we can't hear it).</li>
+            <li>2. The beep hits your leg.</li>
+            <li>3. The beep bounces back to the robot.</li>
+        </ul>
+
+        <div class="diagram-box">
+            <div style="width:20px; height:20px; background:var(--primary); border-radius:50%; position:absolute; left:100px;"></div>
+            <div class="wave w1"></div>
+            <div class="wave w2"></div>
+            <div class="wave w3"></div>
+            <div style="position:absolute; right:80px; font-size:30px;">🚶</div>
+        </div>
+    </div>
+
+    <div class="slide-card">
+        <div class="page-num">4 / 15</div>
+        <h1>📏 The Math</h1>
+        <h2>Measuring Distance</h2>
+        
+        <p>How does the robot know if you are close or far?</p>
+        <p>It counts the time!</p>
+        <p><b>If the beep comes back fast:</b> You are CLOSE.</p>
+        <p><b>If the beep takes a long time:</b> You are FAR AWAY.</p>
+        <p>Maier, Ayan, and Abdul Rehman have to use math to teach the robot how to count very, very fast (in microseconds!).</p>
+    </div>
+
+    <div class="slide-card">
+        <div class="page-num">5 / 15</div>
+        <h1>🚦 The 3 Rules</h1>
+        <h2>The Robot's Instructions</h2>
+        
+        <p>We are going to give the robot three simple rules to follow:</p>
+        <ul>
+            <li><b>Rule 1 (The STOP Rule):</b> If the person is too close (less than 15cm), STOP immediately so we don't crash!</li>
+            <li><b>Rule 2 (The GO Rule):</b> If the person is walking away (20cm to 50cm), drive forward to catch up.</li>
+            <li><b>Rule 3 (The WAIT Rule):</b> If the person is gone, stop and wait for them to come back.</li>
+        </ul>
+    </div>
+
+    <div class="slide-card">
+        <div class="page-num">6 / 15</div>
+        <h1>💪 The Muscles (Motors)</h1>
+        <h2>Making it Move</h2>
+        
+        <p>The Arduino brain is smart, but it is not strong. It cannot push the robot.</p>
+        <p>So, we use <b>DC Motors</b>. These are the muscles. They spin the wheels. We use a special part called a "Motor Driver" to give the muscles lots of power from the battery.</p>
+        
+        <div class="diagram-box">
+            <div style="width:80px; height:80px; border:5px solid #fff; border-radius:50%; position:relative;">
+                <div style="width:10px; height:10px; background:var(--highlight); position:absolute; top:35px; left:35px;"></div>
+                <div style="width:40px; height:4px; background:var(--highlight); position:absolute; top:38px; left:40px; transform-origin:left; animation:sonar 1s infinite linear;"></div>
+            </div>
+            <div style="color:white; margin-left:20px;">Spinning Wheels!</div>
+        </div>
+    </div>
+
+    <div class="slide-card">
+        <div class="page-num">7 / 15</div>
+        <h1>⚡ The Energy (Battery)</h1>
+        <h2>Robot Food</h2>
+        
+        <p>Robots need food too! But they eat electricity. We are planning to use a <b>9-Volt Battery</b>.</p>
+        <p>We have to be very careful with the wires. The <b>RED</b> wire is positive (+), and the <b>BLACK</b> wire is negative (-). If we mix them up, the robot might break!</p>
+        
+        <div class="diagram-box">
+            <div style="width:60px; height:100px; border:4px solid var(--secondary); display:flex; align-items:center; justify-content:center; color:white;">9V</div>
+            <div style="width:100px; height:4px; background:var(--secondary); margin-left:10px;"></div>
+            <div style="width:60px; height:60px; background:#333; border:2px solid white; display:flex; align-items:center; justify-content:center; color:white; font-size:10px;">MOTOR</div>
+        </div>
+    </div>
+
+    <div class="slide-card">
+        <div class="page-num">8 / 15</div>
+        <h1>🔌 The Wiring Map</h1>
+        <h2>Connecting the Dots</h2>
+        
+        <p>Before we build, we draw a map. It's like a treasure map but for electricity.</p>
+        <p>Maier, Ayan, and Abdul Rehman are checking the map to make sure every wire goes to the right pin on the Arduino. This is the hardest part!</p>
+        <p>If one wire is loose, the robot won't wake up.</p>
+    </div>
+
+    <div class="slide-card">
+        <div class="page-num">9 / 15</div>
+        <h1>🤝 How We Work Together</h1>
+        <h2>Team BETA Power</h2>
+        
+        <p>Building a robot is a big job. We split the work:</p>
+        <ul>
+            <li><b>Maier:</b> Helps with the planning and logic.</li>
+            <li><b>Ayan:</b> Helps with the body and wheels.</li>
+            <li><b>Abdul Rehman:</b> Helps with the wires and testing.</li>
+        </ul>
+        <p>We help each other. If someone gets stuck, the others help them fix it.</p>
+    </div>
+
+    <div class="slide-card">
+        <div class="page-num">10 / 15</div>
+        <h1>⛑️ Robot Safety</h1>
+        <h2>Being Careful</h2>
+        
+        <p>We want our robot to be safe.</p>
+        <p>1. We make sure the wires don't touch each other (Short Circuit).</p>
+        <p>2. We make sure the robot stops if it gets too close to a wall.</p>
+        <p>3. We double-check everything before we turn it on.</p>
+    </div>
+
+    <div class="slide-card">
+        <div class="page-num">11 / 15</div>
+        <h1>🏎️ The Body (Chassis)</h1>
+        <h2>The Robot's Skeleton</h2>
+        <p>The chassis is the frame of the robot. We usually use plastic or acrylic.</p>
+        <p>We put the heavy battery in the middle so the robot doesn't tip over. It's like how race cars are built low to the ground so they don't flip!</p>
+    </div>
+
+    <div class="slide-card">
+        <div class="page-num">12 / 15</div>
+        <h1>🧪 Testing Phase</h1>
+        <h2>Checking our Work</h2>
+        <p>We don't just build it and hope it works. We test it!</p>
+        <p>First, we test the sensors. Do they see my hand?</p>
+        <p>Next, we test the wheels. Do they spin the right way?</p>
+        <p>Finally, we put it on the floor and see if it follows us.</p>
+    </div>
+
+    <div class="slide-card">
+        <div class="page-num">13 / 15</div>
+        <h1>🎓 Why is this cool?</h1>
+        <h2>Learning STEM</h2>
+        <p>By doing this project, we are learning:</p>
+        <ul>
+            <li><b>Science:</b> How sound waves move.</li>
+            <li><b>Technology:</b> How computers think.</li>
+            <li><b>Engineering:</b> How to build strong machines.</li>
+            <li><b>Math:</b> How to calculate distance.</li>
+        </ul>
+    </div>
+
+    <div class="slide-card">
+        <div class="page-num">14 / 15</div>
+        <h1>🌍 Robots in Real Life</h1>
+        <h2>Big Robots Do This Too!</h2>
+        <p>Did you know? Real robots use this same idea.</p>
+        <p>- Robots in huge warehouses follow workers to carry heavy boxes.</p>
+        <p>- Some suitcases can now follow you through the airport!</p>
+        <p>Team BETA is learning the same stuff that rocket scientists use.</p>
+    </div>
+
+    <div class="slide-card">
+        <div class="page-num">15 / 15</div>
+        <h1>🚀 Ready to Start!</h1>
+        <h2>Conclusion</h2>
+        
+        <p>Thank you for listening to our plan.</p>
+        <p><b>Team BETA (Maier, Ayan, Abdul Rehman and more)</b> is ready to build the coolest Follow-Me Robot ever.</p>
+        <p>We have our plan, we have our parts, and we have our team.</p>
+        
+        <h2>❓ Any Questions?</h2>
+    </div>
+
+    <div class="controls">
+        <button class="btn" onclick="move(-1)">⬅ Back</button>
+        <button class="btn" onclick="move(1)">Next Slide ➡</button>
+    </div>
+
 </div>
 
 <script>
-    let current = 0;
-    const slides = document.getElementsByClassName("slide-wrapper");
+    /* JAVASCRIPT LOGIC
+       This makes the buttons work! 
+    */
+    let currentSlideIndex = 0;
+    const slides = document.getElementsByClassName("slide-card");
 
-    function nav(step) {
-        slides[current].classList.remove("active");
-        current = (current + step + slides.length) % slides.length;
-        slides[current].classList.add("active");
+    function move(step) {
+        // Hide the current slide
+        slides[currentSlideIndex].classList.remove("active");
+        
+        // Math to find the next slide number
+        currentSlideIndex = (currentSlideIndex + step + slides.length) % slides.length;
+        
+        // Show the new slide
+        slides[currentSlideIndex].classList.add("active");
+        
+        // Scroll to top so we can see the title
         window.scrollTo(0,0);
     }
 </script>
