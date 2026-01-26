@@ -3,258 +3,394 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team BETA | Advanced Follow-Me Robotics Systems</title>
+    <title>Team BETA | Robotics Development Planning</title>
     <style>
-        :root { --neon-blue: #00d4ff; --neon-green: #39ff14; --dark-bg: #0a0b10; --panel-bg: #141622; --text-gray: #b0b3b8; }
-        body { background-color: var(--dark-bg); color: #ffffff; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; text-align: center; }
-        
-        /* Cyber-Grid Background */
+        :root { 
+            --neon-cyan: #00f2ff; 
+            --neon-matrix: #39ff14; 
+            --deep-space: #05070a; 
+            --steel-panel: #11141d; 
+            --ghost-white: #e0e0e0;
+            --dim-text: #94a3b8;
+        }
+
+        body { 
+            background-color: var(--deep-space); 
+            color: var(--ghost-white); 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            margin: 0; 
+            overflow-x: hidden;
+        }
+
+        /* Technical Grid Overlay */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(0, 212, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 212, 255, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px; z-index: -1;
+            background: linear-gradient(90deg, rgba(0, 242, 255, 0.03) 1px, transparent 1px),
+                        linear-gradient(rgba(0, 242, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px; z-index: -1;
         }
 
-        .main-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 40px 20px; }
-        
-        .presentation-box {
-            background: var(--panel-bg); border: 1px solid var(--neon-blue); border-radius: 12px;
-            width: 95%; max-width: 1100px; min-height: 750px; padding: 60px;
-            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 212, 255, 0.1);
-            display: none; position: relative; box-sizing: border-box; overflow-y: auto;
+        .container { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 50px 20px; 
         }
-        .active { display: block; animation: fadeIn 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both; }
 
-        h1 { color: var(--neon-blue); text-transform: uppercase; letter-spacing: 4px; border-bottom: 2px solid #2d3343; padding-bottom: 20px; font-size: 2.2rem; margin-top: 0; }
-        h2 { color: var(--neon-green); font-size: 1.5rem; margin-top: 30px; text-align: left; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .content-text { font-size: 1.15rem; line-height: 1.9; text-align: left; color: var(--text-gray); margin-bottom: 25px; }
-        .highlight { color: var(--neon-blue); font-weight: bold; }
-        
-        .diagram-container { margin: 35px 0; padding: 20px; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border-left: 4px solid var(--neon-blue); }
-        .diagram-img { width: 100%; max-width: 550px; border-radius: 6px; border: 1px solid #333; display: block; margin: 0 auto; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); }
+        .slide-wrapper {
+            background: var(--steel-panel); 
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            border-radius: 4px;
+            width: 95%; 
+            max-width: 1100px; 
+            min-height: 800px; 
+            padding: 60px;
+            box-shadow: 0 20px 80px rgba(0,0,0,0.9);
+            display: none; 
+            position: relative;
+            box-sizing: border-box;
+            text-align: left;
+        }
 
-        .nav-controls { margin-top: 40px; display: flex; gap: 30px; z-index: 10; }
+        .active { display: block; animation: slideReveal 0.6s ease-out; }
+
+        h1 { 
+            color: var(--neon-cyan); 
+            font-size: 2.5rem; 
+            text-transform: uppercase; 
+            letter-spacing: 5px; 
+            margin-bottom: 30px;
+            border-left: 5px solid var(--neon-cyan);
+            padding-left: 20px;
+        }
+
+        h2 { 
+            color: var(--neon-matrix); 
+            font-size: 1.3rem; 
+            letter-spacing: 2px; 
+            margin-bottom: 20px; 
+            text-transform: uppercase;
+        }
+
+        .paragraph { 
+            font-size: 1.15rem; 
+            line-height: 2; 
+            color: var(--dim-text); 
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .highlight { color: var(--neon-cyan); font-weight: 600; }
+
+        .image-box {
+            width: 100%;
+            margin: 40px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.3);
+            border: 1px dashed #334155;
+            display: flex;
+            justify-content: center;
+        }
+
+        .diagram-img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid var(--neon-cyan);
+            filter: grayscale(20%) contrast(110%);
+        }
+
+        .footer-nav { 
+            margin-top: 50px; 
+            display: flex; 
+            gap: 40px; 
+            padding-bottom: 50px;
+        }
+
         .nav-btn {
-            background: transparent; color: var(--neon-blue); border: 1px solid var(--neon-blue);
-            padding: 18px 45px; font-size: 1rem; border-radius: 4px; cursor: pointer;
-            font-weight: 700; text-transform: uppercase; transition: all 0.3s ease; letter-spacing: 2px;
+            background: transparent; 
+            color: var(--neon-cyan); 
+            border: 1px solid var(--neon-cyan);
+            padding: 15px 50px; 
+            font-size: 1rem; 
+            font-weight: bold;
+            cursor: pointer; 
+            text-transform: uppercase; 
+            transition: 0.4s;
+            letter-spacing: 2px;
         }
-        .nav-btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 25px var(--neon-blue); }
-        .slide-indicator { position: absolute; top: 30px; right: 40px; color: var(--neon-blue); font-family: 'Courier New', monospace; font-size: 1.1rem; opacity: 0.7; }
 
-        @keyframes fadeIn { 0% { opacity: 0; transform: scale(0.98); } 100% { opacity: 1; transform: scale(1); } }
-        
-        ul { text-align: left; color: var(--text-gray); line-height: 2; font-size: 1.1rem; }
-        li::marker { color: var(--neon-blue); }
+        .nav-btn:hover { 
+            background: var(--neon-cyan); 
+            color: var(--deep-space); 
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.4); 
+        }
+
+        .counter { 
+            position: absolute; 
+            bottom: 30px; 
+            right: 40px; 
+            font-family: 'Courier New', monospace; 
+            color: var(--neon-cyan); 
+            font-size: 1.2rem;
+        }
+
+        @keyframes slideReveal {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        ul { margin-bottom: 30px; }
+        li { margin-bottom: 15px; color: var(--dim-text); font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
-<div class="main-wrapper">
-    <div id="slides">
-        <div class="presentation-box active">
-            <div class="slide-indicator">SLIDE 01 / 20</div>
-            <h1>🤖 Team BETA: Autonomous Tracking Systems</h1>
-            <h2>Executive Project Overview</h2>
-            <p class="content-text">Welcome to the technical summation of the <span class="highlight">Team BETA Follow-Me Robot</span>. This project represents a comprehensive exploration into the fields of autonomous navigation, sensor fusion, and real-time microcontroller processing. Our mission was to develop a mobile platform capable of object recognition and consistent proximity maintenance without human intervention.</p>
-            <p class="content-text">Engineering Lead: <span class="highlight">Maier</span> | Hardware Lead: <span class="highlight">Ayan</span> | Systems Integration: <span class="highlight">Abdul Rehman</span>. Together, we have successfully integrated multiple hardware modules into a singular, responsive robotic entity.</p>
-            <div class="diagram-container">
+<div class="container">
+    <div id="deck">
+        <div class="slide-wrapper active">
+            <h1>Project Initiation: Team BETA</h1>
+            <h2>Autonomous Follow-Me Robot Strategy</h2>
+            <p class="paragraph">
+                Team BETA, composed of <span class="highlight">Maier, Ayan, and Abdul Rehman</span>, is entering the primary planning phase for an Autonomous Follow-Me Robotic platform. This project is designed to bridge the gap between theoretical electronics and physical automation. Our initial research focuses on creating a reliable tracking system using ultrasonic wave propagation.
+            </p>
+            <p class="paragraph">
+                The objective of this phase is to define the hardware requirements and develop a logical roadmap for the system's architecture. By establishing clear engineering goals now, we ensure that our future build will be stable, responsive, and efficient. This presentation outlines our blueprint for the upcoming development cycle.
+            </p>
+            <div class="image-box">
                 
             </div>
+            <div class="counter">PHASE: PLANNING_01/20</div>
         </div>
 
-        <div class="presentation-box">
-            <div class="slide-indicator">SLIDE 02 / 20</div>
-            <h1>🧠 The Arduino Processing Unit</h1>
-            <h2>Microcontroller Specifications</h2>
-            <p class="content-text">At the center of our architecture is the <span class="highlight">Arduino</span> board. This device serves as the robot’s "Central Nervous System." It is an open-source electronics platform based on flexible, easy-to-use hardware and software. Its primary role in our project is to act as the master controller that bridges the gap between digital logic and physical movement.</p>
-            <p class="content-text">The Arduino executes a high-frequency polling loop. It sends a trigger pulse to the sensors, waits for a return signal, calculates the mathematical distance, and then outputs a Pulse Width Modulation (PWM) signal to the motor driver to determine speed and direction. This allows for fluid and dynamic responses to environmental changes.</p>
-            <div class="diagram-container">
+        <div class="slide-wrapper">
+            <h1>The Central Logic Unit</h1>
+            <h2>Selecting the Arduino Platform</h2>
+            <p class="paragraph">
+                For our central processor, the team has selected the <span class="highlight">Arduino</span> platform. Our planning dictates that we need a controller with sufficient I/O pins and a clock speed capable of processing sonar data without significant latency. The Arduino is ideal because it allows for rapid prototyping and has a robust library system for motor control.
+            </p>
+            <p class="paragraph">
+                During the planning phase, Maier, Ayan, and Abdul Rehman are mapping out the specific digital and analog pins required to interface with the sensors and drivers. This documentation is critical to ensure that our future software code aligns perfectly with the physical hardware connections.
+            </p>
+            <div class="image-box">
                 
             </div>
+            <div class="counter">PHASE: PLANNING_02/20</div>
         </div>
 
-        <div class="presentation-box">
-            <div class="slide-indicator">SLIDE 03 / 20</div>
-            <h1>🔌 The Technical Wiring Map</h1>
-            <h2>Circuit Topology and Signal Flow</h2>
-            <p class="content-text">Successful robotic operation is dependent on precise <span class="highlight">Circuit Topology</span>. Our wiring map follows a complex schematic that ensures high-voltage power remains separated from low-voltage logic to prevent electrical interference. This diagram illustrates the interconnections between the 5V logic power and the 9V motor power rails.</p>
-            <p class="content-text">The wiring layout utilizes a common ground (GND) across all modules to ensure a unified reference voltage. Any error in this map, such as a swapped Trig and Echo wire or an inverted motor polarity, would result in system failure. Maier, Ayan, and Abdul Rehman meticulously verified every bridge and jumper wire against this technical schematic to ensure total system reliability.</p>
-            <div class="diagram-container">
+        <div class="slide-wrapper">
+            <h1>Proposed Wiring Schematic</h1>
+            <h2>Design and Signal Path Planning</h2>
+            <p class="paragraph">
+                A critical part of our current planning is the <span class="highlight">Technical Wiring Map</span>. We are designing a layout that prioritizes signal integrity. This involves planning the paths for the 5V logic lines and the 9V power lines. Team BETA is focused on a "Star Ground" configuration to minimize electrical noise that could interfere with our distance readings.
+            </p>
+            <p class="paragraph">
+                The schematic we are developing will serve as the master guide during the assembly phase. By documenting every jumper wire and resistor value now, Maier, Ayan, and Abdul Rehman are taking a professional "Design First" approach to robotics, significantly reducing the risk of short circuits or logic errors later.
+            </p>
+            <div class="image-box">
                 
             </div>
+            <div class="counter">PHASE: PLANNING_03/20</div>
         </div>
 
-        <div class="presentation-box">
-            <div class="slide-indicator">SLIDE 04 / 20</div>
-            <h1>👀 HC-SR04 Ultrasonic Integration</h1>
-            <h2>Sensory Perception Modules</h2>
-            <p class="content-text">The "Eyes" of the Team BETA robot are powered by the <span class="highlight">HC-SR04 Ultrasonic Sensor</span>. This module works on the principle of echolocation, similar to the biological sonar used by bats and dolphins. It consists of two primary transducers: a transmitter that sends out an ultrasonic pulse (40kHz) and a receiver that waits for that pulse to bounce off an object and return.</p>
-            <p class="content-text">By measuring the exact time of travel for these sound waves, the Arduino can determine the location of the user with high accuracy. This allows the robot to "see" the distance between itself and the human subject, providing the necessary data for the follow-logic to execute.</p>
-            <div class="diagram-container">
+        <div class="slide-wrapper">
+            <h1>Spatial Perception Planning</h1>
+            <h2>HC-SR04 Sensor Integration</h2>
+            <p class="paragraph">
+                To give the robot "vision," we have planned the integration of the <span class="highlight">HC-SR04 Ultrasonic Sensor</span>. Our research indicates this is the most effective low-cost solution for indoor proximity detection. Our planning includes determining the optimal mounting height on the chassis to ensure a clear line of sight for the 40kHz acoustic pulses.
+            </p>
+            <p class="paragraph">
+                The sensor will be the primary source of input data for our autonomous logic. During this planning stage, we are calculating the necessary delay times between "pings" to avoid "ghost echoes"—a phenomenon where old sound waves interfere with new distance readings.
+            </p>
+            <div class="image-box">
                 
             </div>
+            <div class="counter">PHASE: PLANNING_04/20</div>
         </div>
 
-        <div class="presentation-box">
-            <div class="slide-indicator">SLIDE 05 / 20</div>
-            <h1>📡 The Physics of Sonar Waves</h1>
-            <h2>Time-of-Flight (ToF) Calculations</h2>
-            <p class="content-text">To calculate the distance to an object, we use the speed of sound as a constant. Sound travels through the air at approximately <span class="highlight">343 meters per second</span>. The Arduino measures the "Duration" of the pulse in microseconds. We then apply a mathematical formula to convert this time into physical distance (centimeters).</p>
-            <p class="content-text">Formula: <b>Distance = (Time × 0.034) / 2</b>. We must divide by two because the sound wave travels a round-trip: from the robot to the target and back again. Without this calculation, the robot would perceive the target as being twice as far away as it actually is.</p>
-            <div class="diagram-container">
+        <div class="slide-wrapper">
+            <h1>Theoretical Calculations</h1>
+            <h2>Sonar Distance Modeling</h2>
+            <p class="paragraph">
+                Our planning involves establishing the mathematical foundations of the robot. We are using the speed of sound—343 meters per second—as our constant. Team BETA is planning the implementation of the formula: <span class="highlight">Distance = (Time × 0.034) / 2</span>.
+            </p>
+            <p class="paragraph">
+                By modeling these calculations before writing the code, Maier, Ayan, and Abdul Rehman can predict the robot's accuracy. We are also planning to implement a "Running Average" algorithm to smooth out sensor data, which will prevent the robot from reacting to small fluctuations in the ultrasonic readings.
+            </p>
+            <div class="image-box">
                 
             </div>
+            <div class="counter">PHASE: PLANNING_05/20</div>
         </div>
 
-        <div class="presentation-box">
-            <div class="slide-num">SLIDE 06 / 20</div>
-            <h1>⚙️ Autonomous Control Logic</h1>
-            <h2>Dynamic Decision Matrix</h2>
-            <p class="content-text">Our control system is based on a <span class="highlight">Decision Matrix</span> that dictates how the robot reacts to sensory input. Instead of pre-programmed paths, the robot makes real-time choices. This logic is categorized into three distinct "Zones of Engagement":</p>
+        <div class="slide-wrapper">
+            <h1>Algorithm Architecture</h1>
+            <h2>Autonomous Decision Tree</h2>
+            <p class="paragraph">
+                The team is currently designing the <span class="highlight">Decision Logic Flowchart</span>. This will be the "Mind" of the robot. We are planning a state-machine architecture that constantly evaluates the following conditions:
+            </p>
             <ul>
-                <li><b>Zone 1 (Safety Zone):</b> If the distance is less than 15cm, the robot initiates an immediate motor brake to prevent collision.</li>
-                <li><b>Zone 2 (Tracking Zone):</b> If the distance is between 20cm and 50cm, the robot maintains a forward velocity to stay with the user.</li>
-                <li><b>Zone 3 (Idle Zone):</b> If the distance is greater than 100cm, the robot stops and scans, assuming the target is lost.</li>
+                <li><strong>Proximity Brake:</strong> If the target is within a 15cm safety threshold, stop all motor activity.</li>
+                <li><strong>Tracking Mode:</strong> If the target is between 20cm and 50cm, maintain forward velocity.</li>
+                <li><strong>Search State:</strong> If the target is lost (Distance > 100cm), enter an idle scanning mode.</li>
             </ul>
-            <p class="content-text">This conditional logic ensures the robot behaves in a way that feels natural and responsive to the user's movements.</p>
+            <p class="paragraph">This logical planning ensures that the robot behaves predictably and safely in all scenarios.</p>
+            <div class="counter">PHASE: PLANNING_06/20</div>
         </div>
 
-        <div class="presentation-box">
-            <div class="slide-indicator">SLIDE 07 / 20</div>
-            <h1>⚡ L298N Dual H-Bridge Driver</h1>
-            <h2>Power Regulation and Distribution</h2>
-            <p class="content-text">Microcontrollers like the Arduino lack the current capacity to drive high-torque DC motors. Therefore, we integrated the <span class="highlight">L298N Dual H-Bridge Motor Driver</span>. This module acts as an electrical gateway. It takes low-power commands from the Arduino pins and translates them into high-power currents from our 9V battery bank.</p>
-            <p class="content-text">The H-Bridge circuit is essential because it allows the robot to change the direction of current flow to the motors. This gives us the ability to move forward, move backward, or turn by spinning wheels in opposite directions (differential steering).</p>
-            <div class="diagram-container">
+        <div class="slide-wrapper">
+            <h1>Motor Driver Specifications</h1>
+            <h2>L298N H-Bridge Strategy</h2>
+            <p class="paragraph">
+                The <span class="highlight">L298N Motor Driver</span> is our planned interface for mechanical movement. Because the Arduino cannot drive motors directly, this module is a requirement. Our planning involves configuring the H-Bridge pins to allow for bi-directional control, which is essential for steering.
+            </p>
+            <p class="paragraph">
+                Maier, Ayan, and Abdul Rehman are studying the thermal properties of the L298N to ensure it does not overheat during extended use. We are also planning the jumper settings for the "Enable" pins to allow for Pulse Width Modulation (PWM) speed control.
+            </p>
+            <div class="image-box">
                 
             </div>
+            <div class="counter">PHASE: PLANNING_07/20</div>
         </div>
 
-        <div class="presentation-box">
-            <div class="slide-indicator">SLIDE 08 / 20</div>
-            <h1>🎡 DC Motors and Mechanical Drive</h1>
-            <h2>Torque and Propulsion Engineering</h2>
-            <p class="content-text"> propulsion is handled by two <span class="highlight">Geared DC Motors</span>. Unlike standard motors, geared motors use a gear reduction box to increase torque—the rotational force needed to push the robot’s weight—at the cost of some speed. This makes the robot much stronger and easier to control during slow movements.</p>
-            <p class="content-text">Each motor is connected to a high-traction rubber wheel. By modulating the power to the left and right wheels separately, the robot can perform complex maneuvers, such as pivoting around a central axis to track a user who is turning a corner.</p>
-            <div class="diagram-container">
+        <div class="slide-wrapper">
+            <h1>Mechanical Drivetrain</h1>
+            <h2>DC Motor and Torque Requirements</h2>
+            <p class="paragraph">
+                We are planning to use two geared DC motors for the robot’s propulsion. Our focus is on <span class="highlight">Torque</span> over speed. Geared motors provide the necessary force to move the chassis while allowing for precise, low-speed maneuvers.
+            </p>
+            <p class="paragraph">
+                The team is also evaluating wheel diameters to determine the "RPM to Velocity" ratio. This planning is vital because it determines how fast the robot can catch up to a user who is walking at a normal pace.
+            </p>
+            <div class="image-box">
                 
             </div>
+            <div class="counter">PHASE: PLANNING_08/20</div>
         </div>
 
-        <div class="presentation-box">
-            <div class="slide-indicator">SLIDE 09 / 20</div>
-            <h1>📌 The Technical Pinout Diagram</h1>
-            <h2>Input and Output (I/O) Management</h2>
-            <p class="content-text">Managing the <span class="highlight">Pinout Configuration</span> is a vital step in hardware integration. Every sensor and actuator requires a specific dedicated pin on the Arduino. For this project, we designated specific digital pins for the Trigger and Echo functions of the sonar, and dedicated PWM (Pulse Width Modulation) pins for motor speed control.</p>
-            <p class="content-text">PWM is a technique used to control the speed of the motors by switching the power on and off very quickly. This allows Maier and the team to make the robot move slowly when it is close to the user and speed up when the user starts to walk away.</p>
-            <div class="diagram-container">
+        <div class="slide-wrapper">
+            <h1>Interface Pinout Planning</h1>
+            <h2>Arduino Configuration Map</h2>
+            <p class="paragraph">
+                An essential step in our planning is the <span class="highlight">Pinout Table</span>. We are assigning specific digital pins for the Trigger and Echo functions of the HC-SR04, and PWM-capable pins for the motor driver speed control. 
+            </p>
+            <p class="paragraph">
+                This planning avoids "Pin Conflicts"—a common mistake where two components try to use the same internal timer of the Arduino. Maier, Ayan, and Abdul Rehman have documented these pins to ensure the future coding phase proceeds without hardware-related bugs.
+            </p>
+            <div class="image-box">
                 
 
 [Image of an Arduino board with pins labeled]
 
             </div>
+            <div class="counter">PHASE: PLANNING_09/20</div>
         </div>
 
-        <div class="presentation-box">
-            <div class="slide-indicator">SLIDE 10 / 20</div>
-            <h1>🔋 Power Supply and Battery Management</h1>
-            <h2>Energy Storage and Distribution</h2>
-            <p class="content-text">Robotics projects face a major challenge known as "Electrical Noise." When motors spin, they create small spikes in electricity that can interfere with the Arduino’s delicate circuitry. To solve this, Team BETA utilized a <span class="highlight">Dual-Power Strategy</span>. We used a 9V battery to power the motors through the L298N driver and a separate regulated supply for the Arduino logic.</p>
-            <p class="content-text">Ensuring that the robot has enough "Current Capacity" is the difference between a robot that moves and a robot that just makes a humming sound. Our battery system provides the necessary Amps to keep the robot moving for the duration of the presentation.</p>
-            <div class="diagram-container">
+        <div class="slide-wrapper">
+            <h1>Energy Source Strategy</h1>
+            <h2>Battery and Voltage Regulation</h2>
+            <p class="paragraph">
+                Team BETA is planning a 9V power delivery system. Our primary concern during this planning stage is <span class="highlight">Voltage Stability</span>. We are designing a power rail that separates the "noisy" motor current from the "clean" logic current.
+            </p>
+            <p class="paragraph">
+                We are also planning to include an external switch for safety and a voltage monitoring system. This allows the team to ensure the batteries have enough charge to power both the motors and the processing logic simultaneously.
+            </p>
+            <div class="image-box">
                 
             </div>
+            <div class="counter">PHASE: PLANNING_10/20</div>
         </div>
 
-        <div class="presentation-box">
-            <h1>🍞 Prototyping on Breadboards</h1>
-            <h2>Pre-Assembly Verification Phase</h2>
-            <p class="content-text">Before we moved to the permanent chassis, Team BETA utilized a <span class="highlight">Breadboard</span>. This tool allows for solderless circuit testing. It was during this phase that Ayan and Abdul Rehman were able to swap wires and test different resistor values without damaging any expensive components. This stage is critical in the engineering lifecycle as it allows for rapid iteration of ideas.</p>
-            <div class="diagram-container">
+        <div class="slide-wrapper">
+            <h1>Prototype Simulation</h1>
+            <h2>Virtual Testing Phase</h2>
+            <p class="paragraph">Part of our current planning is to simulate the circuit using CAD software before any wires are cut. This allows <span class="highlight">Maier, Ayan, and Abdul Rehman</span> to visualize the flow of electricity. We are using these simulations to identify potential bottlenecks in the data flow. By virtually testing the sonar's field of view, we can determine exactly where to place it on the chassis for maximum tracking efficiency.</p>
+            <div class="image-box">
                 
             </div>
+            <div class="counter">PHASE: PLANNING_11/20</div>
         </div>
 
-        <div class="presentation-box">
-            <h1>📏 Microsecond Precision</h1>
-            <h2>Software Timing and Logic</h2>
-            <p class="content-text">The Arduino does not measure distance in inches; it measures time in <span class="highlight">Microseconds</span>. One microsecond is one-millionth of a second. To achieve a smooth "follow" effect, our code must process these time values extremely quickly. Maier programmed the system to ignore "False Positives"—spikes in sound that aren't actually the target—ensuring the robot doesn't jitter or move randomly.</p>
+        <div class="slide-wrapper">
+            <h1>Environmental Signal Analysis</h1>
+            <h2>Accounting for Interference</h2>
+            <p class="paragraph">Our planning includes an analysis of environmental interference. Ultrasonic waves can be absorbed by carpets or reflected poorly by glass. Team BETA is planning to write a "Calibration Routine" into the software. This will allow the robot to adjust its sensitivity based on the room it is in. This advanced planning ensures the robot will work in a classroom, a lab, or a hallway with equal reliability.</p>
+            <div class="counter">PHASE: PLANNING_12/20</div>
         </div>
 
-        <div class="presentation-box">
-            <h1>🏗️ Mechanical Chassis Design</h1>
-            <h2>Structural Integrity and Balance</h2>
-            <p class="content-text">The physical frame, or <span class="highlight">Chassis</span>, was engineered for balance. If the robot is too top-heavy, the sudden acceleration from the motors would cause it to flip over. We placed the heavy batteries at the lowest point of the frame to create a low center of gravity. This mechanical advantage allows the robot to start and stop abruptly while remaining perfectly stable.</p>
+        <div class="slide-wrapper">
+            <h1>Chassis Structural Design</h1>
+            <h2>Material Selection and Balance</h2>
+            <p class="paragraph">The team is evaluating acrylic vs. 3D-printed materials for the chassis frame. Our planning focuses on <span class="highlight">Structural Integrity</span>. We need a base that is rigid enough to hold the motors in place but light enough to not drain the batteries. We are planning to place the battery pack at the very center of the chassis to ensure a balanced center of gravity, preventing the robot from tipping during fast stops.</p>
+            <div class="counter">PHASE: PLANNING_13/20</div>
         </div>
 
-        <div class="presentation-box">
-            <h1>🛠️ Hardware Debugging Procedures</h1>
-            <h2>Solving Real-World Technical Issues</h2>
-            <p class="content-text">No project is perfect on the first try. Team BETA encountered "Phase Inversion" where the motors were spinning in opposite directions, causing the robot to spin in circles. Through systematic <span class="highlight">Debugging</span>, we traced the issue to a mirrored connection on the L298N board. Correcting this required a deep understanding of H-Bridge logic and motor polarity.</p>
+        <div class="slide-wrapper">
+            <h1>Software Development Roadmap</h1>
+            <h2>Iterative Coding Strategy</h2>
+            <p class="paragraph">The coding phase is planned to be iterative. We will start with a simple "Stop/Go" script and then move to "Proportional Speed Control." Proportional control means the robot will slow down smoothly as it gets closer to the user, rather than stopping abruptly. This planning is what will make the Team BETA robot look professional and sophisticated compared to basic hobby projects.</p>
+            <div class="counter">PHASE: PLANNING_14/20</div>
         </div>
 
-        <div class="presentation-box">
-            <h1>🎯 System Calibration</h1>
-            <h2>Tuning for Peak Performance</h2>
-            <p class="content-text">Calibration involves adjusting the software to match the physical world. We found that the robot was too sensitive to small movements, causing it to "stutter." By adding a <span class="highlight">Deadband</span>—a small range of distances where the robot does nothing—we were able to smooth out the movement, making it look professional and polished.</p>
+        <div class="slide-wrapper">
+            <h1>PWM Tuning and Frequency</h1>
+            <h2>Motor Speed Optimization</h2>
+            <p class="paragraph">A key planning objective is to determine the ideal PWM frequency for our DC motors. If the frequency is too low, the motors will make a buzzing sound; if it's too high, they lose torque. Maier and the team are planning to test different duty cycles to find the "Sweet Spot" where the motors are quiet, strong, and responsive. This level of detail is a core part of our engineering planning.</p>
+            <div class="counter">PHASE: PLANNING_15/20</div>
         </div>
 
-        <div class="presentation-box">
-            <h1>🌍 Industrial and Global Impact</h1>
-            <h2>Scaling Technology for the Future</h2>
-            <p class="content-text">The "Follow-Me" concept is not just a toy; it is a vital part of <span class="highlight">Modern Automation</span>. In hospitals, similar robots follow nurses with medical supplies. In giant warehouses, robots follow workers to carry heavy pallets. By building this system, Team BETA is learning the same logic used by companies like Tesla, Amazon, and Boston Dynamics.</p>
+        <div class="slide-wrapper">
+            <h1>Risk Assessment & Mitigation</h1>
+            <h2>Ensuring System Reliability</h2>
+            <p class="paragraph">No engineering project is without risk. Team BETA is currently planning for "Worst Case Scenarios," such as a sensor failing or a motor stalling. We are planning to include "Failsafe Code" that will cut power to the motors if the Arduino stops receiving valid data from the sonar sensor. This proactive planning is essential for the safety of the hardware and the users.</p>
+            <div class="counter">PHASE: PLANNING_16/20</div>
         </div>
 
-        <div class="presentation-box">
-            <h1>📂 Component Integration</h1>
-            <h2>The Importance of Module Synergy</h2>
-            <p class="content-text">Synergy is when different parts work together to create something better than the parts alone. Our robot is a perfect example: the plastic chassis, the metal motors, the silicon brain, and the sound sensors. None of these could follow a human alone, but together, they form an intelligent system.</p>
+        <div class="slide-wrapper">
+            <h1>Scaling to Industry Standards</h1>
+            <h2>Real-World Application Study</h2>
+            <p class="paragraph">As part of our planning, we are studying how industrial giants like Amazon and Tesla handle autonomous tracking. While we are using an Arduino, the logic of "Distance Maintenance" we are planning is a simplified version of the algorithms used in self-driving cars. This project is a foundational step in our journey to becoming professional roboticists.</p>
+            <div class="counter">PHASE: PLANNING_17/20</div>
         </div>
 
-        <div class="presentation-box">
-            <h1>💡 Essential STEM Skills</h1>
-            <h2>Educational Takeaways</h2>
-            <p class="content-text">This project has taught Maier, Ayan, and Abdul Rehman more than just robotics. We learned <span class="highlight">Computational Thinking</span>, which is the ability to break a large problem into small, solvable steps. We learned how to read technical data sheets, how to manage a power budget, and how to communicate as a professional engineering team.</p>
+        <div class="slide-wrapper">
+            <h1>Team Communication Protocols</h1>
+            <h2>Managing a Multi-Disciplinary Project</h2>
+            <p class="paragraph">Team BETA recognizes that communication is as important as the circuit. We are planning weekly "Design Reviews" where Maier, Ayan, and Abdul Rehman will check each other’s work. This collaborative planning ensures that the mechanical build fits the electrical wiring, and the electrical wiring supports the software requirements. Total team synergy is our goal.</p>
+            <div class="counter">PHASE: PLANNING_18/20</div>
         </div>
 
-        <div class="presentation-box">
-            <h1>🤝 Team Collaboration and Success</h1>
-            <h2>The BETA Team Philosophy</h2>
-            <p class="content-text">Success in engineering is a team sport. Maier focused on the logic and coding architecture, Ayan managed the mechanical assembly and drivetrain, and Abdul Rehman ensured system integration and electrical testing. By working together, we overcame challenges that would have been impossible for one person to solve alone.</p>
+        <div class="slide-wrapper">
+            <h1>Projected Timeline</h1>
+            <h2>Milestones and Deadlines</h2>
+            <p class="paragraph">Our planning includes a strict timeline. Week 1 is for circuit simulation. Week 2 is for chassis assembly. Week 3 is for core logic programming. By breaking the project into these planned segments, <span class="highlight">Maier, Ayan, and Abdul Rehman</span> can ensure that the project is submitted on time without rushing the critical testing phases.</p>
+            <div class="counter">PHASE: PLANNING_19/20</div>
         </div>
 
-        <div class="presentation-box">
-            <h1>🚀 Project Conclusion and Q&A</h1>
-            <h2>Final Summary of Team BETA</h2>
-            <p class="content-text">The Team BETA Follow-Me Robot stands as a testament to our hard work and technical curiosity. We have successfully designed, built, and programmed an autonomous vehicle that interacts with its environment in real-time. We are proud of the final result and the skills we have developed along the way.</p>
-            <p class="content-text"><b>Engineers: Maier, Ayan, and Abdul Rehman.</b></p>
-            <h2>Thank you! Are there any questions?</h2>
+        <div class="slide-wrapper">
+            <h1>Conclusion of Planning Phase</h1>
+            <h2>Readiness for Construction</h2>
+            <p class="paragraph">In conclusion, Team BETA has developed a comprehensive and professional plan for the Follow-Me Robot. We have defined our hardware, mapped our software logic, and analyzed the physics of our sensors. We are now ready to move from the planning phase into the physical construction phase with total confidence.</p>
+            <p class="paragraph"><strong>Strategy by: Maier, Ayan, and Abdul Rehman</strong></p>
+            <p class="paragraph">Our blueprints are ready. Are there any questions regarding our technical planning?</p>
+            <div class="counter">PHASE: PLANNING_20/20</div>
         </div>
     </div>
 
-    <div class="nav-controls">
-        <button class="nav-btn" onclick="changeSlide(-1)">⬅ Back</button>
-        <button class="nav-btn" onclick="changeSlide(1)">Next Slide ➡</button>
+    <div class="footer-nav">
+        <button class="nav-btn" onclick="nav(-1)">Back</button>
+        <button class="nav-btn" onclick="nav(1)">Next Slide</button>
     </div>
 </div>
 
 <script>
-    let currentSlide = 0;
-    const slides = document.getElementsByClassName("presentation-box");
+    let current = 0;
+    const slides = document.getElementsByClassName("slide-wrapper");
 
-    function changeSlide(direction) {
-        // Remove active class from current slide
-        slides[currentSlide].classList.remove("active");
-        
-        // Calculate next slide index
-        currentSlide = (currentSlide + direction + slides.length) % slides.length;
-        
-        // Add active class to the new slide
-        slides[currentSlide].classList.add("active");
-        
-        // Scroll to top for better experience on mobile
+    function nav(step) {
+        slides[current].classList.remove("active");
+        current = (current + step + slides.length) % slides.length;
+        slides[current].classList.add("active");
         window.scrollTo(0,0);
     }
 </script>
