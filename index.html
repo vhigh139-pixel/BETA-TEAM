@@ -1,102 +1,216 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Team BETA Robot Project</title>
+    <meta charset="UTF-8">
+    <title>Team BETA | Follow-Me Robot System</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; text-align: center; background-color: #eef2f3; padding: 20px; }
-        .slide {
-            background: white;
-            border: 8px solid #007bff;
-            border-radius: 30px;
-            padding: 30px;
-            width: 85%;
-            margin: auto;
-            min-height: 400px;
-            display: none;
-            box-shadow: 0px 10px 20px rgba(0,0,0,0.1);
+        :root { --neon: #00ffcc; --bg: #0d1117; --panel: #161b22; }
+        body { background-color: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; text-align: center; }
+        
+        /* Robotic Grid Background */
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(var(--neon) 0.5px, transparent 0.5px);
+            background-size: 30px 30px; opacity: 0.1; z-index: -1;
         }
-        .active { display: block; }
-        h1 { color: #007bff; font-size: 35px; text-transform: uppercase; }
-        p, li { font-size: 22px; color: #333; line-height: 1.5; }
-        .controls { margin-top: 20px; }
+
+        .slide-container { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        
+        .slide-box {
+            background: var(--panel); border: 2px solid var(--neon); border-radius: 20px;
+            width: 90%; max-width: 950px; min-height: 600px; padding: 40px;
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.2); display: none; position: relative;
+        }
+        .active { display: block; animation: slideIn 0.4s ease-out; }
+
+        h1 { color: var(--neon); text-transform: uppercase; letter-spacing: 2px; border-bottom: 2px solid #30363d; padding-bottom: 10px; margin-top: 0; }
+        p, li { font-size: 1.2rem; line-height: 1.6; text-align: left; color: #c9d1d9; }
+        .highlight { color: var(--neon); font-weight: bold; }
+        
+        .code-block {
+            background: #000; color: #0f0; padding: 15px; border-radius: 10px;
+            text-align: left; font-family: 'Courier New', monospace; font-size: 14px;
+            border: 1px solid #333; overflow-x: auto; margin: 10px 0;
+        }
+
+        .controls { margin-top: 30px; display: flex; gap: 20px; }
         .btn {
-            background-color: #007bff;
-            color: white;
-            padding: 15px 30px;
-            font-size: 18px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            margin: 10px;
-            font-weight: bold;
+            background: transparent; color: var(--neon); border: 2px solid var(--neon);
+            padding: 15px 35px; font-size: 18px; border-radius: 10px; cursor: pointer;
+            font-weight: bold; transition: 0.3s;
         }
-        .btn:hover { background-color: #0056b3; }
-        .team-list { color: #28a745; font-weight: bold; }
+        .btn:hover { background: var(--neon); color: #0d1117; }
+        .slide-num { position: absolute; top: 20px; right: 30px; color: var(--neon); font-family: monospace; }
+
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <div id="slide-container"></div>
+<div class="slide-container">
+    <div id="slides">
+        <div class="slide-box active">
+            <div class="slide-num">01/20</div>
+            <h1>🤖 Team BETA: Follow-Me Robot</h1>
+            <p><b>Lead Engineers:</b> Maier, Ayan, & Abdul Rehman</p>
+            
+            <p>We built an autonomous machine that uses sonar waves to track and follow human targets in real-time.</p>
+        </div>
 
-    <div class="controls">
-        <button class="btn" onclick="goBack()">⬅ PREVIOUS</button>
-        <button class="btn" onclick="goNext()">NEXT SLIDE ➡</button>
+        <div class="slide-box">
+            <div class="slide-num">02/20</div>
+            <h1>🧠 The Arduino Uno</h1>
+            <p>The <span class="highlight">Arduino Uno</span> is our microcontroller (The Brain). It processes sensor data and controls motor speed.</p>
+            
+        </div>
+
+        <div class="slide-box">
+            <div class="slide-num">03/20</div>
+            <h1>🔌 The Technical Wiring Map</h1>
+            <p>This map shows how we connected the sensors to the Brain and the Brain to the Motors.</p>
+            
+        </div>
+
+        <div class="slide-box">
+            <div class="slide-num">04/20</div>
+            <h1>👀 Ultrasonic "Eyes"</h1>
+            <p>We used the <span class="highlight">HC-SR04</span> sensor. It uses high-frequency pings to detect distance.</p>
+            
+        </div>
+
+        <div class="slide-box">
+            <div class="slide-num">05/20</div>
+            <h1>📏 The Physics of Sound</h1>
+            <p>We calculate distance by measuring how long it takes sound to travel to the target and back.</p>
+            
+        </div>
+
+        <div class="slide-box">
+            <div class="slide-num">06/20</div>
+            <h1>💻 The Core C++ Code</h1>
+            <p>This is a snippet of the logic Maier programmed into the Arduino:</p>
+            <div class="code-block">
+                void loop() { <br>
+                &nbsp;&nbsp;long duration = pulseIn(echoPin, HIGH);<br>
+                &nbsp;&nbsp;int distance = duration * 0.034 / 2;<br>
+                &nbsp;&nbsp;if (distance > 20) { forward(); }<br>
+                &nbsp;&nbsp;else if (distance < 10) { stop(); }<br>
+                }
+            </div>
+        </div>
+
+        <div class="slide-box">
+            <div class="slide-num">07/20</div>
+            <h1>⚡ L298N Motor Driver</h1>
+            <p>The "Muscle" of the robot. It translates the Brain's small signals into high-power movement.</p>
+            
+        </div>
+
+        <div class="slide-box">
+            <div class="slide-num">08/20</div>
+            <h1>🎡 DC Motors & Wheels</h1>
+            <p>Dual DC motors allow the robot to move at different speeds for smooth turning.</p>
+            
+        </div>
+
+        <div class="slide-box">
+            <div class="slide-num">09/20</div>
+            <h1>📌 Arduino Pinout Diagram</h1>
+            <p>Understanding which pins handle input and which handle output is critical for wiring.</p>
+            
+
+[Image of an Arduino Uno pinout diagram]
+
+        </div>
+
+        <div class="slide-box">
+            <div class="slide-num">10/20</div>
+            <h1>📈 System Flowchart</h1>
+            <p>This shows the step-by-step decision-making process of Team BETA's robot.</p>
+            
+        </div>
+
+        <div class="slide-box">
+            <div class="slide-num">11/20</div>
+            <h1>🔋 9V Mobile Power</h1>
+            <p>We used a 9V battery with a snap connector to ensure the robot can move freely without wires.</p>
+            
+        </div>
+
+        <div class="slide-box">
+            <div class="slide-num">12/20</div>
+            <h1>🍞 Breadboard Prototype</h1>
+            <p>Before soldering, Ayan and Abdul Rehman used a breadboard to test the circuit.</p>
+            
+        </div>
+
+        <div class="slide-box">
+            <div class="slide-num">13/20</div>
+            <h1>🏗️ Chassis Assembly</h1>
+            <p>The robot uses a 2-wheel acrylic chassis with a front caster wheel for 360-degree rotation.</p>
+        </div>
+
+        <div class="slide-box">
+            <div class="slide-num">14/20</div>
+            <h1>⏱️ Time vs. Distance</h1>
+            <p>Sound travels at 343 m/s. We divide the pulse time by 58 to get the distance in centimeters.</p>
+        </div>
+
+        <div class="slide-box">
+            <div class="slide-num">15/20</div>
+            <h1>🛠️ Debugging the Code</h1>
+            <p>Maier had to fix 'noise' in the sensor data by adding a small delay in the C++ loop.</p>
+        </div>
+
+        <div class="slide-box">
+            <div class="slide-num">16/20</div>
+            <h1>🎯 System Calibration</h1>
+            <p>We tuned the motor speed to prevent the robot from jerky movements during tracking.</p>
+        </div>
+
+        <div class="slide-box">
+            <div class="slide-num">17/20</div>
+            <h1>⚠️ Project Challenges</h1>
+            <p>We faced issues with battery drainage and loose jumper wires during the testing phase.</p>
+        </div>
+
+        <div class="slide-box">
+            <div class="slide-num">18/20</div>
+            <h1>🌍 The Future of AI</h1>
+            <p>The logic we learned is used in Amazon warehouse robots and self-driving cars.</p>
+        </div>
+
+        <div class="slide-box">
+            <div class="slide-num">19/20</div>
+            <h1>💡 Skills Developed</h1>
+            <p>This project taught us C++ coding, electrical engineering, and mechanical assembly.</p>
+        </div>
+
+        <div class="slide-box">
+            <div class="slide-num">20/20</div>
+            <h1>🚀 Mission Success</h1>
+            <p>Presented by: <span class="highlight">Maier, Ayan, & Abdul Rehman</span></p>
+            <p>Team BETA successfully delivered a working autonomous robot!</p>
+            <h2>Questions?</h2>
+        </div>
     </div>
 
-    <script>
-        const slideData = [
-            { t: "🤖 Team BETA Robot", c: "Welcome to our STEM project!<br><br>The Team: <span class='team-list'>Maier, Ayan, and Abdul Rehman</span>" },
-            { t: "👥 Meet the Team", c: "<b>Maier:</b> The Master Coder (C++)<br><b>Ayan:</b> The Master Builder (Chassis)<br><b>Abdul Rehman:</b> The Master Tester (Sensors)" },
-            { t: "🎯 Our Goal", c: "We wanted to build a robot that follows a person like a pet, without using a remote control!" },
-            { t: "🧠 The Robot's Brain", c: "We used an <b>Arduino Uno</b>. It's a tiny computer that takes our code and tells the wheels to move." },
-            { t: "👀 How it Sees", c: "It uses <b>Ultrasonic Sensors</b>. These work like bat ears to 'ping' sound off objects to find them." },
-            { t: "💻 The C++ Language", c: "We wrote our instructions in C++. It’s a professional language used to build real robots!" },
-            { t: "⚡ The Power", c: "We used a 9V battery. This gives the 'juice' to the motors and the brain." },
-            { t: "🛠️ The Build", c: "Ayan built the body using a chassis, two wheels, and a spinning 'caster' wheel in the front." },
-            { t: "📏 The Math", c: "The robot calculates: <b>Time of sound / 58 = Distance</b>. This happens hundreds of times a second!" },
-            { t: "🛑 If-Then Logic", c: "IF the target is more than 20cm away -> DRIVE forward.<br>IF it's too close -> STOP so it doesn't crash!" },
-            { t: "🔧 Troubleshooting", c: "Abdul Rehman found loose wires, and Maier fixed the code bugs to make it move smoothly." },
-            { t: "🌟 Conclusion", c: "Team BETA learned that with coding and teamwork, we can build the future! Any Questions?" }
-            // (I have shortened the display list to keep it simple for your 5th grade level, but all main info is here!)
-        ];
-
-        let currentSlide = 0;
-
-        function renderSlide() {
-            const container = document.getElementById("slide-container");
-            const s = slideData[currentSlide];
-            container.innerHTML = `
-                <div class="slide active">
-                    <p style="text-align:right; color:#999;">Slide ${currentSlide + 1} of ${slideData.length}</p>
-                    <h1>${s.t}</h1>
-                    <p>${s.c}</p>
-                </div>
-            `;
-        }
-
-        function goNext() {
-            if (currentSlide < slideData.length - 1) {
-                currentSlide++;
-                renderSlide();
-            }
-        }
-
-        function goBack() {
-            if (currentSlide > 0) {
-                currentSlide--;
-                renderSlide();
-            }
-        }
-
-        renderSlide();
-    </script>
-</body>
-</html><div class="slide">
-    <h1>👀 How it Sees</h1>
-    <p>It uses <b>Ultrasonic Sensors</b>. These work like bat ears!</p>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/HC-SR04_Ultrasonic_Sensor.jpg/320px-HC-SR04_Ultrasonic_Sensor.jpg" style="width:300px; border-radius:10px;">
-</div><div class="slide">
-    <h1>🧠 The Robot's Brain</h1>
-    <p>We used an <b>Arduino Uno</b> to run our C++ code.</p>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Arduino_Uno_-_R3.jpg/320px-Arduino_Uno_-_R3.jpg" style="width:300px; border-radius:10px;">
+    <div class="controls">
+        <button class="btn" onclick="move(-1)">BACK</button>
+        <button class="btn" onclick="move(1)">NEXT</button>
+    </div>
 </div>
+
+<script>
+    let current = 0;
+    const slides = document.getElementsByClassName("slide-box");
+    function move(n) {
+        slides[current].classList.remove("active");
+        current = (current + n + slides.length) % slides.length;
+        slides[current].classList.add("active");
+        window.scrollTo(0,0);
+    }
+</script>
+
+</body>
+</html>
