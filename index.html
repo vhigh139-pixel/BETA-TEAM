@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team BETA | The Robot Plan</title>
+    <title>Team BETA | Robot Wiring Plan</title>
     <style>
         /* ========================================
-           CSS STYLES - MAKES IT LOOK COOL
+           CSS STYLES - MAKES IT LOOK COOL 
            ========================================
         */
         :root {
             --primary: #00e5ff;    /* Bright Blue */
             --secondary: #ff0055;  /* Bright Red */
             --highlight: #39ff14;  /* Neon Green */
-            --dark: #0b0c15;       /* Dark Background */
-            --panel: #151621;      /* Panel Color */
-            --text: #e0e6ed;       /* Text Color */
+            --wire-red: #ff3333;
+            --wire-black: #333333;
+            --wire-yellow: #ffcc00;
+            --dark: #0b0c15;       
+            --panel: #151621;      
+            --text: #e0e6ed;       
         }
 
         body {
@@ -101,7 +104,7 @@
         }
 
         /* ========================================
-           CUSTOM DIAGRAMS (BUILT IN CODE)
+           CUSTOM DRAWN DIAGRAMS (NO IMAGES NEEDED)
            ========================================
         */
         .diagram-box {
@@ -111,8 +114,8 @@
             margin: 30px auto;
             padding: 20px;
             width: 100%;
-            max-width: 500px;
-            height: 250px;
+            max-width: 600px;
+            height: 300px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -143,19 +146,17 @@
         .w2 { left: 160px; animation-delay: 0.2s; height: 60px; top: 95px; }
         .w3 { left: 180px; animation-delay: 0.4s; height: 80px; top: 85px; }
 
-        /* Diagram 3: Wiring */
-        .battery {
-            width: 60px; height: 100px; border: 3px solid var(--secondary);
-            position: absolute; left: 100px;
-        }
-        .wire-line {
-            height: 4px; background: var(--secondary); width: 150px;
-            position: absolute; top: 125px; left: 160px;
-        }
-        .arduino-board {
-            width: 100px; height: 120px; background: #004466;
-            position: absolute; right: 100px; border: 2px solid var(--primary);
-        }
+        /* Diagram 3: The Wiring Map (Complex CSS Drawing) */
+        .component { position: absolute; border-radius: 5px; font-weight: bold; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 2; }
+        .comp-arduino { width: 100px; height: 140px; background: #008CBA; left: 50px; top: 50px; border: 2px solid white; }
+        .comp-driver { width: 80px; height: 80px; background: #e74c3c; right: 80px; top: 50px; border: 2px solid white; }
+        .comp-sensor { width: 120px; height: 40px; background: #2ecc71; left: 200px; bottom: 30px; border: 2px solid white; }
+        
+        /* The Wires */
+        .wire { position: absolute; z-index: 1; opacity: 0.8; }
+        .wire-1 { height: 4px; width: 150px; background: var(--wire-red); top: 90px; left: 150px; } /* Power */
+        .wire-2 { height: 4px; width: 150px; background: var(--wire-black); top: 110px; left: 150px; } /* Ground */
+        .wire-3 { height: 60px; width: 4px; background: var(--wire-yellow); left: 100px; top: 190px; } /* Sensor Link */
 
         /* Navigation Buttons */
         .controls {
@@ -214,7 +215,7 @@
         <h2>The "Follow-Me" Robot Project</h2>
         
         <p>Hello! We are <b>Team BETA</b>.</p>
-        <p>Our team members are <span class="team-names">Maier, Ayan, and Abdul Rehman</span>.</p>
+        <p>Our team members are <span class="team-names">Maier, Ayan, and Abdul Rehman and more teammates</span>.</p>
         <p>We are planning to build a robot that acts like a loyal pet. Imagine a robot that sees you and follows you wherever you go! We don't need a remote control because the robot will think for itself.</p>
         
         <div class="diagram-box">
@@ -235,10 +236,7 @@
         <p>The Arduino is the boss. It sits in the middle of the robot. It tells the wheels when to spin and when to stop. Without the Arduino, the robot would just be a pile of plastic and metal.</p>
         
         <div class="diagram-box">
-            <div class="arduino-board" style="position:relative; right:0; margin:auto;">
-                <div style="width:80%; height:10px; background:#333; margin:10px auto;"></div>
-                <div style="color:white; font-size:12px; text-align:center; padding-top:30px;">ARDUINO<br>CHIP</div>
-            </div>
+            <div class="component comp-arduino" style="position:relative; margin:auto; top:0; left:0;">Arduino</div>
         </div>
     </div>
 
@@ -323,26 +321,34 @@
 
     <div class="slide-card">
         <div class="page-num">8 / 15</div>
-        <h1>🔌 The Wiring Map</h1>
-        <h2>Connecting the Dots</h2>
+        <h1>🗺️ The Big Plan</h1>
+        <h2>Before We Build</h2>
         
-        <p>Before we build, we draw a map. It's like a treasure map but for electricity.</p>
-        <p>Maier, Ayan, and Abdul Rehman are checking the map to make sure every wire goes to the right pin on the Arduino. This is the hardest part!</p>
-        <p>If one wire is loose, the robot won't wake up.</p>
+        <p>Before we touch any tools, we make a plan. This is called "Engineering."</p>
+        <p>We listed all our parts:</p>
+        <ul>
+            <li>1. Arduino Uno (Brain)</li>
+            <li>2. L298N Driver (Muscle Controller)</li>
+            <li>3. HC-SR04 (Sonar Eyes)</li>
+            <li>4. Chassis (Body)</li>
+        </ul>
     </div>
 
     <div class="slide-card">
         <div class="page-num">9 / 15</div>
-        <h1>🤝 How We Work Together</h1>
-        <h2>Team BETA Power</h2>
+        <h1>🔌 The Wiring Diagram</h1>
+        <h2>Connecting the Brain to the Body</h2>
         
-        <p>Building a robot is a big job. We split the work:</p>
-        <ul>
-            <li><b>Maier:</b> Helps with the planning and logic.</li>
-            <li><b>Ayan:</b> Helps with the body and wheels.</li>
-            <li><b>Abdul Rehman:</b> Helps with the wires and testing.</li>
-        </ul>
-        <p>We help each other. If someone gets stuck, the others help them fix it.</p>
+        <p>This is the most important part! We have to connect the wires exactly like this picture so the electricity flows correctly.</p>
+        <p><b>Blue Box:</b> The Arduino (Brain)<br>
+        <b>Red Box:</b> The Motor Driver (Muscles)<br>
+        <b>Green Box:</b> The Sensor (Eyes)</p>
+
+        <div class="diagram-box">
+            <div class="component comp-arduino">ARDUINO<br>(Brain)</div>
+            <div class="wire wire-1"></div> <div class="wire wire-2"></div> <div class="component comp-driver">DRIVER<br>(Power)</div>
+            <div class="wire wire-3"></div> <div class="component comp-sensor">SENSOR (Eyes)</div>
+        </div>
     </div>
 
     <div class="slide-card">
@@ -403,7 +409,7 @@
         <h2>Conclusion</h2>
         
         <p>Thank you for listening to our plan.</p>
-        <p><b>Team BETA (Maier, Ayan, Abdul Rehman and more)</b> is ready to build the coolest Follow-Me Robot ever.</p>
+        <p><b>Team BETA (Maier, Ayan, Abdul Rehman and more teammates )</b> is ready to build the coolest Follow-Me Robot ever.</p>
         <p>We have our plan, we have our parts, and we have our team.</p>
         
         <h2>❓ Any Questions?</h2>
@@ -417,23 +423,14 @@
 </div>
 
 <script>
-    /* JAVASCRIPT LOGIC
-       This makes the buttons work! 
-    */
+    /* JAVASCRIPT LOGIC */
     let currentSlideIndex = 0;
     const slides = document.getElementsByClassName("slide-card");
 
     function move(step) {
-        // Hide the current slide
         slides[currentSlideIndex].classList.remove("active");
-        
-        // Math to find the next slide number
         currentSlideIndex = (currentSlideIndex + step + slides.length) % slides.length;
-        
-        // Show the new slide
         slides[currentSlideIndex].classList.add("active");
-        
-        // Scroll to top so we can see the title
         window.scrollTo(0,0);
     }
 </script>
