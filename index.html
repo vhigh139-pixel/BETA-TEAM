@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goosy Gang | Robot Wiring Plan</title>
+    <title>Goosy Gang | STEM Defense</title>
     <style>
         /* ========================================
-           CSS STYLES - MAKES IT LOOK COOL 
+           CSS STYLES - NEON THEME
            ========================================
         */
         :root {
             --primary: #00e5ff;    /* Bright Blue */
             --secondary: #ff0055;  /* Bright Red */
             --highlight: #39ff14;  /* Neon Green */
-            --wire-red: #ff3333;
-            --wire-black: #333333;
-            --wire-yellow: #ffcc00;
+            --gold: #ffd700;       /* Gold for Values */
             --dark: #0b0c15;       
             --panel: #151621;      
             --text: #e0e6ed;       
+            --wire-red: #ff3333;
+            --wire-black: #333333;
+            --wire-yellow: #ffcc00;
         }
 
         body {
@@ -34,25 +35,15 @@
         /* Cool Grid Background Effect */
         body::before {
             content: "";
-            position: fixed;
-            top: 0; 
-            left: 0;
-            width: 100%; 
-            height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: 
                 linear-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px), 
                 linear-gradient(90deg, rgba(0, 229, 255, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -1;
+            background-size: 40px 40px; z-index: -1;
         }
 
         .main-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 40px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 40px;
         }
 
         /* The Slide Box */
@@ -60,145 +51,67 @@
             background: var(--panel);
             border: 2px solid var(--primary);
             border-radius: 20px;
-            width: 90%;
-            max-width: 900px;
-            min-height: 700px;
-            padding: 50px;
+            width: 90%; max-width: 900px; min-height: 600px; padding: 50px;
             box-shadow: 0 0 50px rgba(0, 229, 255, 0.15);
-            display: none; /* Hidden by default */
+            display: none; 
             animation: floatUp 0.5s ease-out;
             position: relative;
         }
 
-        .active {
-            display: block; /* Show active slide */
-        }
+        .active { display: block; }
 
-        /* Typography */
         h1 {
-            color: var(--primary);
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+            color: var(--primary); font-size: 2.5rem; text-transform: uppercase;
+            letter-spacing: 3px; margin-bottom: 10px; text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
         }
 
-        h2 {
-            color: var(--highlight);
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-        }
+        h2 { color: var(--highlight); font-size: 1.5rem; margin-bottom: 30px; }
+        h3 { color: var(--gold); font-size: 1.8rem; margin: 20px 0; }
 
-        p {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            text-align: left;
-            margin-bottom: 20px;
-            color: #bdc3c7;
-        }
+        p { font-size: 1.3rem; line-height: 1.8; text-align: left; margin-bottom: 20px; color: #bdc3c7; }
 
-        .team-names {
-            font-weight: bold;
-            color: var(--secondary);
-        }
+        .arabic-text { font-size: 3rem; color: #fff; margin: 40px 0; font-family: 'Arial', sans-serif; }
+        .team-names { font-weight: bold; color: var(--secondary); }
 
         /* ========================================
-           CUSTOM DRAWN DIAGRAMS (NO IMAGES NEEDED)
+           CUSTOM DIAGRAMS
            ========================================
         */
         .diagram-box {
-            background: #000;
-            border: 2px dashed #444;
-            border-radius: 10px;
-            margin: 30px auto;
-            padding: 20px;
-            width: 100%;
-            max-width: 600px;
-            height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
+            background: #000; border: 2px dashed #444; border-radius: 10px;
+            margin: 30px auto; padding: 20px; width: 100%; max-width: 600px; height: 300px;
+            display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
         }
 
-        /* Diagram 1: Robot Face */
-        .robot-face {
-            width: 100px; height: 80px; background: #333;
-            border: 2px solid var(--primary); border-radius: 10px;
-            position: relative;
-        }
-        .robot-eye {
-            width: 20px; height: 20px; background: var(--secondary);
-            border-radius: 50%; position: absolute; top: 20px;
-            box-shadow: 0 0 10px var(--secondary);
-        }
+        .robot-face { width: 100px; height: 80px; background: #333; border: 2px solid var(--primary); border-radius: 10px; position: relative; }
+        .robot-eye { width: 20px; height: 20px; background: var(--secondary); border-radius: 50%; position: absolute; top: 20px; box-shadow: 0 0 10px var(--secondary); }
         .eye-left { left: 20px; } .eye-right { right: 20px; }
 
-        /* Diagram 2: Sound Waves */
-        .wave {
-            width: 10px; height: 40px; border-right: 3px solid var(--highlight);
-            border-radius: 50%; position: absolute; opacity: 0;
-            animation: sonar 1.5s infinite linear;
-        }
-        .w1 { left: 140px; animation-delay: 0s; }
-        .w2 { left: 160px; animation-delay: 0.2s; height: 60px; top: 95px; }
-        .w3 { left: 180px; animation-delay: 0.4s; height: 80px; top: 85px; }
-
-        /* Diagram 3: The Wiring Map (Complex CSS Drawing) */
-        .component { position: absolute; border-radius: 5px; font-weight: bold; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 2; }
-        .comp-arduino { width: 100px; height: 140px; background: #008CBA; left: 50px; top: 50px; border: 2px solid white; }
-        .comp-driver { width: 80px; height: 80px; background: #e74c3c; right: 80px; top: 50px; border: 2px solid white; }
-        .comp-sensor { width: 120px; height: 40px; background: #2ecc71; left: 200px; bottom: 30px; border: 2px solid white; }
+        .component { position: absolute; border-radius: 5px; font-weight: bold; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 2; border: 2px solid white; box-shadow: 0 0 10px rgba(255,255,255,0.2); }
+        .comp-arduino { width: 120px; height: 160px; background: #008CBA; left: 40px; top: 60px; }
+        .comp-driver { width: 100px; height: 100px; background: #e74c3c; right: 60px; top: 40px; }
+        .comp-sensor { width: 140px; height: 50px; background: #2ecc71; left: 220px; bottom: 40px; }
         
-        /* The Wires */
-        .wire { position: absolute; z-index: 1; opacity: 0.8; }
-        .wire-1 { height: 4px; width: 150px; background: var(--wire-red); top: 90px; left: 150px; } /* Power */
-        .wire-2 { height: 4px; width: 150px; background: var(--wire-black); top: 110px; left: 150px; } /* Ground */
-        .wire-3 { height: 60px; width: 4px; background: var(--wire-yellow); left: 100px; top: 190px; } /* Sensor Link */
+        .wire { position: absolute; z-index: 1; opacity: 0.9; }
+        .wire-1 { height: 4px; width: 180px; background: var(--wire-red); top: 100px; left: 150px; }
+        .wire-2 { height: 4px; width: 180px; background: var(--wire-black); top: 120px; left: 150px; }
+        .wire-3 { height: 80px; width: 4px; background: var(--wire-yellow); left: 100px; top: 210px; }
 
-        /* Navigation Buttons */
-        .controls {
-            margin-top: 40px;
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
+        .chest-box { width: 100px; height: 80px; background: var(--gold); border: 4px solid #fff; border-radius: 10px 10px 0 0; position: relative; }
+        .chest-lid { width: 108px; height: 30px; background: #ffaa00; position: absolute; top: -15px; left: -8px; border-radius: 10px; border: 2px solid #fff; }
 
+        .controls { margin-top: 40px; display: flex; gap: 20px; justify-content: center; }
         .btn {
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-            text-transform: uppercase;
+            background: transparent; color: var(--primary); border: 2px solid var(--primary);
+            padding: 15px 40px; font-size: 1.2rem; border-radius: 50px; cursor: pointer;
+            font-weight: bold; transition: 0.3s; text-transform: uppercase;
         }
-
-        .btn:hover {
-            background: var(--primary);
-            color: #000;
-            box-shadow: 0 0 20px var(--primary);
-        }
-
-        /* Slide Counter */
-        .page-num {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: #555;
-            font-family: monospace;
-            font-size: 1.2rem;
-        }
+        .btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 20px var(--primary); }
+        
+        .page-num { position: absolute; top: 20px; right: 30px; color: #555; font-family: monospace; font-size: 1.2rem; }
 
         @keyframes floatUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes sonar { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.5); translateX(20px); } }
         
-        /* List Styling */
         ul { text-align: left; font-size: 1.3rem; line-height: 1.8; color: #bdc3c7; }
         li { margin-bottom: 10px; }
         b { color: var(--highlight); }
@@ -211,208 +124,164 @@
 
     <div class="slide-card active">
         <div class="page-num">1 / 15</div>
-        <h1>🤖 Team BETA</h1>
-        <h2>The "Follow-Me" Robot Project</h2>
+        <h3>Grade 5 | Section: Neptune</h3>
+        <h1>🛡️ TITLE DEFENSE</h1>
+        <h2>Subject: STEM</h2>
         
-        <p>Hello! We are <b>Team BETA</b>.</p>
-        <p>Our team members are <span class="team-names">Maier, Ayaan,  Abdul Rehman , Mustafa , and Ahmed </span>.</p>
-        <p>We are planning to build a robot that acts like a loyal pet. Imagine a robot that sees you and follows you wherever you go! We don't need a remote control because the robot will think for itself.</p>
+        <p><b>Project Name:</b> The Follow-Me Robot</p>
+        <p><b>Team Name:</b> <span class="team-names">Goosy Gang</span></p>
+        <p><b>Members:</b> <span class="team-names">Maier, Ayan, Abdul Rehman</span></p>
         
         <div class="diagram-box">
             <div class="robot-face">
                 <div class="robot-eye eye-left"></div>
                 <div class="robot-eye eye-right"></div>
             </div>
-            <div style="color: white; margin-left: 20px;">I see you!</div>
+            <div style="color: white; margin-left: 20px;">GOOSY GANG READY!</div>
         </div>
     </div>
 
     <div class="slide-card">
         <div class="page-num">2 / 15</div>
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+            <div class="arabic-text">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+            <p style="text-align: center;">In the name of Allah, the Most Gracious, the Most Merciful</p>
+        </div>
+    </div>
+
+    <div class="slide-card">
+        <div class="page-num">3 / 15</div>
+        <h1>💎 Our Values</h1>
+        <h2>Treasure Chest!</h2>
+        
+        <p>Goosy Gang believes in:</p>
+        <ul>
+            <li><b>Teamwork:</b> We work together like a flock of geese!</li>
+            <li><b>Curiosity:</b> Exploring how wires and code work.</li>
+            <li><b>Honesty:</b> Being truthful about our project results.</li>
+        </ul>
+
+        <div class="diagram-box">
+            <div class="chest-box">
+                <div class="chest-lid"></div>
+            </div>
+            <div style="color: var(--gold); font-size: 24px; margin-left: 20px;">✨ Goosy Teamwork ✨</div>
+        </div>
+    </div>
+
+    <div class="slide-card">
+        <div class="page-num">4 / 15</div>
+        <h1>🧩 What’s the Puzzle We’re Solving?</h1>
+        <h2>Problem Statement</h2>
+        
+        <p><b>The Problem:</b> Carrying heavy things while walking can be hard. Remotes are easy to lose.</p>
+        <p><b>Our Puzzle:</b> Can we create a robot that "sees" us and follows us without any help?</p>
+        
+        <div style="font-size: 60px; margin-top: 40px;">🚶 💨 🤖</div>
+    </div>
+
+    <div class="slide-card">
+        <div class="page-num">5 / 15</div>
+        <h1>🎉 What Fun Things Will We Discover?</h1>
+        <h2>Project Objectives</h2>
+        
+        <p>The Goosy Gang goals are:</p>
+        <ul>
+            <li>1. To learn how <b>Ultrasonic waves</b> measure distance.</li>
+            <li>2. To use <b>C++ code</b> to control motors.</li>
+            <li>3. To build a robot that stays steady on its wheels.</li>
+        </ul>
+        
+        <div class="diagram-box">
+            <div style="color: white; font-size: 40px;">🔍 + 🏗️ + 🔋</div>
+        </div>
+    </div>
+
+    <div class="slide-card">
+        <div class="page-num">6 / 15</div>
+        <h1>🌍 Let’s Explore the Project!</h1>
+        <h2>Project Overview</h2>
+        
+        <p>Our project is an <b>Autonomous Follower</b>. It doesn't need a driver! It uses its "eyes" to detect a person and moves its "muscles" to follow them.</p>
+    </div>
+
+    <div class="slide-card">
+        <div class="page-num">7 / 15</div>
         <h1>🧠 The Brain (Arduino)</h1>
-        <h2>How does it think?</h2>
-        
-        <p>Just like we have a brain, the robot needs a brain too. We are using a small computer called an <b>Arduino</b>.</p>
-        <p>The Arduino is the boss. It sits in the middle of the robot. It tells the wheels when to spin and when to stop. Without the Arduino, the robot would just be a pile of plastic and metal.</p>
-        
+        <h2>The Thinking Part</h2>
+        <p>We use an Arduino Uno. It is the center of everything. It reads the sensor data every millisecond!</p>
         <div class="diagram-box">
             <div class="component comp-arduino" style="position:relative; margin:auto; top:0; left:0;">Arduino</div>
         </div>
     </div>
 
     <div class="slide-card">
-        <div class="page-num">3 / 15</div>
-        <h1>👀 The Eyes (Sonar)</h1>
-        <h2>Seeing with Sound</h2>
-        
-        <p>Our robot doesn't use cameras. It uses <b>Sound Waves</b>! This is called "Ultrasonic."</p>
-        <p>It works just like a bat in a cave:</p>
-        <ul>
-            <li>1. The robot shouts a "beep" (we can't hear it).</li>
-            <li>2. The beep hits your leg.</li>
-            <li>3. The beep bounces back to the robot.</li>
-        </ul>
-
-        <div class="diagram-box">
-            <div style="width:20px; height:20px; background:var(--primary); border-radius:50%; position:absolute; left:100px;"></div>
-            <div class="wave w1"></div>
-            <div class="wave w2"></div>
-            <div class="wave w3"></div>
-            <div style="position:absolute; right:80px; font-size:30px;">🚶</div>
-        </div>
-    </div>
-
-    <div class="slide-card">
-        <div class="page-num">4 / 15</div>
-        <h1>📏 The Math</h1>
-        <h2>Measuring Distance</h2>
-        
-        <p>How does the robot know if you are close or far?</p>
-        <p>It counts the time!</p>
-        <p><b>If the beep comes back fast:</b> You are CLOSE.</p>
-        <p><b>If the beep takes a long time:</b> You are FAR AWAY.</p>
-        <p>Maier, Ayan, and Abdul Rehman have to use math to teach the robot how to count very, very fast (in microseconds!).</p>
-    </div>
-
-    <div class="slide-card">
-        <div class="page-num">5 / 15</div>
-        <h1>🚦 The 3 Rules</h1>
-        <h2>The Robot's Instructions</h2>
-        
-        <p>We are going to give the robot three simple rules to follow:</p>
-        <ul>
-            <li><b>Rule 1 (The STOP Rule):</b> If the person is too close (less than 15cm), STOP immediately so we don't crash!</li>
-            <li><b>Rule 2 (The GO Rule):</b> If the person is walking away (20cm to 50cm), drive forward to catch up.</li>
-            <li><b>Rule 3 (The WAIT Rule):</b> If the person is gone, stop and wait for them to come back.</li>
-        </ul>
-    </div>
-
-    <div class="slide-card">
-        <div class="page-num">6 / 15</div>
-        <h1>💪 The Muscles (Motors)</h1>
-        <h2>Making it Move</h2>
-        
-        <p>The Arduino brain is smart, but it is not strong. It cannot push the robot.</p>
-        <p>So, we use <b>DC Motors</b>. These are the muscles. They spin the wheels. We use a special part called a "Motor Driver" to give the muscles lots of power from the battery.</p>
-        
-        <div class="diagram-box">
-            <div style="width:80px; height:80px; border:5px solid #fff; border-radius:50%; position:relative;">
-                <div style="width:10px; height:10px; background:var(--highlight); position:absolute; top:35px; left:35px;"></div>
-                <div style="width:40px; height:4px; background:var(--highlight); position:absolute; top:38px; left:40px; transform-origin:left; animation:sonar 1s infinite linear;"></div>
-            </div>
-            <div style="color:white; margin-left:20px;">Spinning Wheels!</div>
-        </div>
-    </div>
-
-    <div class="slide-card">
-        <div class="page-num">7 / 15</div>
-        <h1>⚡ The Energy (Battery)</h1>
-        <h2>Robot Food</h2>
-        
-        <p>Robots need food too! But they eat electricity. We are planning to use a <b>9-Volt Battery</b>.</p>
-        <p>We have to be very careful with the wires. The <b>RED</b> wire is positive (+), and the <b>BLACK</b> wire is negative (-). If we mix them up, the robot might break!</p>
-        
-        <div class="diagram-box">
-            <div style="width:60px; height:100px; border:4px solid var(--secondary); display:flex; align-items:center; justify-content:center; color:white;">9V</div>
-            <div style="width:100px; height:4px; background:var(--secondary); margin-left:10px;"></div>
-            <div style="width:60px; height:60px; background:#333; border:2px solid white; display:flex; align-items:center; justify-content:center; color:white; font-size:10px;">MOTOR</div>
-        </div>
-    </div>
-
-    <div class="slide-card">
         <div class="page-num">8 / 15</div>
-        <h1>🗺️ The Big Plan</h1>
-        <h2>Before We Build</h2>
-        
-        <p>Before we touch any tools, we make a plan. This is called "Engineering."</p>
-        <p>We listed all our parts:</p>
-        <ul>
-            <li>1. Arduino  (Brain)</li>
-            <li>2. L298N Driver (Muscle Controller)</li>
-            <li>3. HC-SR04 (Sonar Eyes)</li>
-            <li>4. Chassis (Body)</li>
-        </ul>
+        <h1>👀 The Eyes (Sonar)</h1>
+        <h2>Seeing the Target</h2>
+        <p>Our sensor sends out sound. If it bounces back fast, the robot knows you are close!</p>
     </div>
 
     <div class="slide-card">
         <div class="page-num">9 / 15</div>
         <h1>🔌 The Wiring Diagram</h1>
-        <h2>Connecting the Brain to the Body</h2>
+        <h2>Goosy Gang's Connections</h2>
         
-        <p>This is the most important part! We have to connect the wires exactly like this picture so the electricity flows correctly.</p>
-        <p><b>Blue Box:</b> The Arduino (Brain)<br>
-        <b>Red Box:</b> The Motor Driver (Muscles)<br>
-        <b>Green Box:</b> The ultrasonic sensor (Eyes)</p>
-
         <div class="diagram-box">
             <div class="component comp-arduino">ARDUINO<br>(Brain)</div>
-            <div class="wire wire-1"></div> <div class="wire wire-2"></div> <div class="component comp-driver">DRIVER<br>(Power)</div>
-            <div class="wire wire-3"></div> <div class="component comp-sensor">SENSOR (Eyes)</div>
+            <div class="wire wire-1"></div>
+            <div class="wire wire-2"></div>
+            <div class="component comp-driver">DRIVER<br>(Power)</div>
+            <div class="wire wire-3"></div>
+            <div class="component comp-sensor">SENSOR (Eyes)</div>
         </div>
     </div>
 
     <div class="slide-card">
         <div class="page-num">10 / 15</div>
-        <h1>⛑️ Robot Safety</h1>
-        <h2>Being Careful</h2>
-        
-        <p>We want our robot to be safe.</p>
-        <p>1. We make sure the wires don't touch each other (Short Circuit).</p>
-        <p>2. We make sure the robot stops if it gets too close to a wall.</p>
-        <p>3. We double-check everything before we turn it on.</p>
+        <h1>💻 Code Logic</h1>
+        <h2>Smart Decisions</h2>
+        <ul>
+            <li><b>Close:</b> Stop immediately.</li>
+            <li><b>Perfect Distance:</b> Follow at a steady speed.</li>
+            <li><b>Far:</b> Look for a friend!</li>
+        </ul>
     </div>
 
     <div class="slide-card">
         <div class="page-num">11 / 15</div>
-        <h1>🏎️ The Body (Chassis)</h1>
-        <h2>The Robot's Skeleton</h2>
-        <p>The chassis is the frame of the robot. We usually use plastic or acrylic.</p>
-        <p>We put the heavy battery in the middle so the robot doesn't tip over. It's like how race cars are built low to the ground so they don't flip!</p>
+        <h1>🏎️ The Chassis</h1>
+        <h2>Building the Body</h2>
+        <p>The Goosy Gang robot uses a 4-wheel drive system for better grip on the floor.</p>
     </div>
 
     <div class="slide-card">
         <div class="page-num">12 / 15</div>
-        <h1>🧪 Testing Phase</h1>
-        <h2>Checking our Work</h2>
-        <p>We don't just build it and hope it works. We test it!</p>
-        <p>First, we test the sensors. Do they see my hand?</p>
-        <p>Next, we test the wheels. Do they spin the right way?</p>
-        <p>Finally, we put it on the floor and see if it follows us.</p>
+        <h1>🧪 Testing</h1>
+        <h2>Trial and Error</h2>
+        <p>We tested the robot in the hallway. We had to fix the wires twice, but now it works perfectly!</p>
     </div>
 
     <div class="slide-card">
         <div class="page-num">13 / 15</div>
         <h1>🎓 Why is this cool?</h1>
-        <h2>Learning STEM</h2>
-        <p>By doing this project, we are learning:</p>
-        <ul>
-            <li><b>Science:</b> How sound waves move.</li>
-            <li><b>Technology:</b> How computers think.</li>
-            <li><b>Engineering:</b> How to build strong machines.</li>
-            <li><b>Math:</b> How to calculate distance.</li>
-        </ul>
+        <h2>Future Engineering</h2>
+        <p>Learning this helps us understand self-driving cars and smart machines.</p>
     </div>
 
     <div class="slide-card">
         <div class="page-num">14 / 15</div>
-        <h1>🌍 Robots in Real Life</h1>
-        <h2>Big Robots Do This Too!</h2>
-        <p>Did you know? Real robots use this same idea.</p>
-        <p>- Robots in huge warehouses follow workers to carry heavy boxes.</p>
-        <p>- Some suitcases can now follow you through the airport!</p>
-        <p>Team BETA is learning the same stuff that rocket scientists use.</p>
+        <h1>🤝 Goosy Teamwork</h1>
+        <h2>How We Did It</h2>
+        <p>Maier: Planning | Ayan: Building | Abdul Rehman: Wiring.</p>
     </div>
 
     <div class="slide-card">
         <div class="page-num">15 / 15</div>
-        <h1>🚀 Ready to Start!</h1>
-        <h2>Conclusion</h2>
-        
-        <p>Thank you for listening to our plan.</p>
-        <p><b>Team BETA (Maier, Ayan, Abdul Rehman and more teammates )</b> is ready to build the coolest Follow-Me Robot ever.</p>
-        <p>We have our plan, we have our parts, and we have our team.</p>
-        
-        <h2>❓ Any Questions?</h2>
+        <h1>🚀 Conclusion</h1>
+        <h2>Goosy Gang Out!</h2>
+        <p>Thank you for watching our defense. We are ready for your questions!</p>
+        <h2>Any Questions?</h2>
     </div>
 
     <div class="controls">
@@ -423,7 +292,6 @@
 </div>
 
 <script>
-    /* JAVASCRIPT LOGIC */
     let currentSlideIndex = 0;
     const slides = document.getElementsByClassName("slide-card");
 
